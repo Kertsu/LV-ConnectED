@@ -1,9 +1,16 @@
 import { Configuration } from 'Database/entities/configuration';
-import { Response, Request } from 'express';
+import { Request, Response } from 'express';
 
 export default class ApisController {
     static async greet(request: Request, response: Response) {
         response.json({ greeting: `Hello, ${request.query.name}` });
+    }
+
+    static async users(request: Request, response: Response) {
+        response.json({
+            status: 1,
+            message: "users"
+        })
     }
 
     static async configurations(request: Request, response: Response){
