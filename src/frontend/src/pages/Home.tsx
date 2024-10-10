@@ -12,6 +12,7 @@ const Home: React.FC = () => {
       <p className="text-lg text-gray-800 dark:text-gray-200">Connecting students and providers for quality education.</p>
       <Button label="Get Started" onClick={() => alert('Button clicked!')} />
     </div>
+    
     </div>
   );
 };
