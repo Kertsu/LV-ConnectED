@@ -8,6 +8,8 @@ import { Briefcase, Users, Smile, Zap, TrendingUp, UserPlus } from "lucide-react
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import BlurFade from "@/components/ui/blur-fade";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 
 const Home: React.FC = () => {
