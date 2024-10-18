@@ -4,6 +4,7 @@ export interface User {
   bannerUrl?: string;
   validIdUrl?: string;
   name?: string;
+  organizationName?: string;
   bio?: string;
   email: string;
   emailVerifiedAt?: string;

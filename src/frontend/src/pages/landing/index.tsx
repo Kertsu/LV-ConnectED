@@ -8,19 +8,21 @@ import { Briefcase, Users, Smile, Zap, TrendingUp, UserPlus } from "lucide-react
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import BlurFade from "@/components/ui/blur-fade";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
+import { useTheme } from "@/components/theme-provider";
 
 
 const Home: React.FC = () => {
+  const theme = useTheme();
   return (
     <div className="scroll-smooth">
       <Header />
       <div
-        className="flex flex-col items-center justify-center h-screen"
+        className="flex flex-col items-center justify-center pt-52 pb-96"
         id="home"
       >
         <BlurFade delay={0.25} inView >
           <NeonGradientCard>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold pb-10">
               Welcome to{" "}
               <span className="text-7xl font-bold dark:text--200 bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">
                   ConnectED  
@@ -36,7 +38,21 @@ const Home: React.FC = () => {
         </BlurFade>
         
       </div>
-      <Separator />
+      {/* <Separator /> */}
+
+      <BlurFade yOffset={50} delay={0.50} duration={0.50} inView>
+        <div className="relative flex justify-center items-center w-full h-auto md:w-3/4 md:h-full mx-auto bottom-32">
+          { theme.theme == 'dark' && (
+            <img
+            src="https://res.cloudinary.com/djsrqk4fc/image/upload/v1729225848/landing_page_1st_w9ky9l.png"
+            alt="Example Image"
+            className="w-full h-full border-8 rounded-lg"
+          />)
+          }
+          {/* <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent w-full h-full"></div> */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"/>
+        </div>
+      </BlurFade>
       <div className="flex flex-col gap-4 items-center container mx-auto">
       <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">

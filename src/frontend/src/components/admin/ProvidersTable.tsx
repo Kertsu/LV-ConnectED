@@ -19,7 +19,7 @@ const ProvidersTable = () => {
     <>
       <DataTable
         columns={providersColumns}
-        data={dummyUsers}
+        data={data || []}
         page={page}
         pageSize={take}
         totalRows={totalRows}

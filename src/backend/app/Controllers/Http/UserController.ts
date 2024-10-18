@@ -16,7 +16,7 @@ export default class UserController {
       const data = await User.findAndCount({
         where: {
           archivedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull())
+          emailVerifiedAt: Not(IsNull()),
         },
         select: {
           id: true,
@@ -26,12 +26,21 @@ export default class UserController {
           email: true,
           role: true,
           bannerUrl: true,
+          createdAt: true,
+          updatedAt: true,
+          emailVerifiedAt: true,
+          organizationName: true,
         },
         skip,
         take,
       });
 
-      httpResponseSuccess(response, { users: data[0], count: data[1] }, null, 200);
+      httpResponseSuccess(
+        response,
+        { users: data[0], count: data[1] },
+        null,
+        200
+      );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
@@ -44,7 +53,7 @@ export default class UserController {
     const data = await User.findOneBy({
       id,
       archivedAt: IsNull(),
-      emailVerifiedAt: Not(IsNull())
+      emailVerifiedAt: Not(IsNull()),
     });
 
     if (!data) {
@@ -72,7 +81,7 @@ export default class UserController {
           emailVerifiedAt: Not(IsNull()),
           role: "provider",
           providerVerifiedAt: Not(IsNull()),
-          validIdUrl: Not(IsNull())
+          validIdUrl: Not(IsNull()),
         },
         select: {
           id: true,
@@ -81,13 +90,18 @@ export default class UserController {
           name: true,
           email: true,
           bio: true,
-          validIdUrl: true
+          validIdUrl: true,
         },
         skip,
-        take
+        take,
       });
 
-      httpResponseSuccess(response, { providers: data[0], count: data[1] }, null, 200);
+      httpResponseSuccess(
+        response,
+        { providers: data[0], count: data[1] },
+        null,
+        200
+      );
     } catch (error) {
       console.log("78: ", error);
       httpResponseError(response, null, "Internal Server Error!", 500);
@@ -104,7 +118,7 @@ export default class UserController {
           role: "provider",
           archivedAt: IsNull(),
           providerVerifiedAt: IsNull(),
-          emailVerifiedAt: Not(IsNull())
+          emailVerifiedAt: Not(IsNull()),
         },
         select: {
           id: true,
@@ -113,13 +127,18 @@ export default class UserController {
           avatarUrl: true,
           bannerUrl: true,
           bio: true,
-          validIdUrl: true
+          validIdUrl: true,
         },
         skip,
-        take
+        take,
       });
 
-      httpResponseSuccess(response, { providers: data[0], count: data[1] }, null, 200);
+      httpResponseSuccess(
+        response,
+        { providers: data[0], count: data[1] },
+        null,
+        200
+      );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
@@ -134,7 +153,7 @@ export default class UserController {
         where: {
           archivedAt: IsNull(),
           emailVerifiedAt: Not(IsNull()),
-          role: "student"
+          role: "student",
         },
         select: {
           id: true,
@@ -142,13 +161,18 @@ export default class UserController {
           email: true,
           bio: true,
           avatarUrl: true,
-          bannerUrl: true
+          bannerUrl: true,
         },
         skip,
-        take
+        take,
       });
 
-      httpResponseSuccess(response, { students: data[0], count: data[1] }, null, 500);
+      httpResponseSuccess(
+        response,
+        { students: data[0], count: data[1] },
+        null,
+        500
+      );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }

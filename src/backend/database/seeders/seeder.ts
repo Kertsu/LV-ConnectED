@@ -11,7 +11,7 @@ export class Seeder {
   public async seedUsers() {
     try {
       this.dataSource = await this.db.getDataSource();
-      const users = User.create(userSeeds);
+      const users = User.create(userSeeds(5, "student"));
 
       await this.dataSource.getRepository(User).save(users);
 

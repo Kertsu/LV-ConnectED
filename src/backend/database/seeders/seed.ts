@@ -1,11 +1,12 @@
-export const userSeeds = [
+import { faker } from "@faker-js/faker";
+export const legitCreds = [
   {
     avatarUrl:
       "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/452912470_2526121527595306_3752199441102383149_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEtCgs-XyXL89ENkqy7JG3peWlRnJXahMF5aVGcldqEwU1hJd6qhyhKUGWsK52KiDE16tK8oTnAWiBcfTghtwJt&_nc_ohc=nyj-K21CRl8Q7kNvgGHFtoL&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AxNTWZFhCZdA3OBSWam6QD_&oh=00_AYAWq-elKA1RxTQIYt2OvUbsNU1BC78UgYAoOUl34JTN_w&oe=67110D26",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     name: "Johnmack Faeldonia",
     bio: "A passionate entrepreneur.",
-    email: "johmmack@gmail.com",
+    email: "johnmarkfaeldonia@student.laverdad.edu.ph",
     role: "student",
     createdAt: "2024-01-01T12:00:00Z",
     updatedAt: "2024-09-01T12:00:00Z",
@@ -18,7 +19,7 @@ export const userSeeds = [
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     name: "Kurtd Daniel Bigtas",
     bio: "Tech enthusiast and problem solver.",
-    email: "kurtddbigtas@example.com",
+    email: "kurtddbigtas@gmail.com",
     role: "student",
     createdAt: "2024-02-15T12:00:00Z",
     updatedAt: "2024-09-15T12:00:00Z",
@@ -31,7 +32,7 @@ export const userSeeds = [
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     name: "Raven Dela Rama",
     bio: "Engineer with a love for innovation.",
-    email: "raven@example.com",
+    email: "johnraybendelarama@student.laverdad.edu.ph",
     role: "student",
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
@@ -44,7 +45,7 @@ export const userSeeds = [
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     name: "Allen Magadia",
     bio: "Engineer with a love for innovation.",
-    email: "allen@example.com",
+    email: "allenmagadia@student.laverdad.edu.ph",
     role: "student",
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
@@ -57,71 +58,40 @@ export const userSeeds = [
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     name: "Jethro Cadang",
     bio: "Engineer with a love for innovation.",
-    email: "jethro@example.com",
+    email: "jethrocadang@student.laverdad.edu.ph",
     role: "student",
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
     emailVerifiedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
   },
-  {
-    avatarUrl: "https://placehold.co/150x150.png?text=A",
-    bannerUrl: "https://placehold.co/600x400?text=Abstract+Art",
-    name: "Isabella Rodriguez",
-    bio: "Aspiring graphic designer with a passion for abstract art and user experience design.",
-    email: "isabella.rodriguez@example.com",
-    role: "student",
-    createdAt: "2023-10-25T18:15:00Z",
-    updatedAt: "2024-10-17T14:30:00Z",
-    emailVerifiedAt: "2024-09-20T12:00:00Z",
-    archivedAt: null,
-  },
-  {
-    avatarUrl: "https://placehold.co/150x150.png?text=S",
-    bannerUrl: "https://placehold.co/600x400?text=Soccer+Field",
-    name: "David Lee",
-    bio: "Dedicated computer science major and starting midfielder for the university soccer team. Looking to combine my love for technology and sports in a future career.",
-    email: "david.lee@example.com",
-    role: "student",
-    createdAt: "2024-01-10T09:00:00Z",
-    updatedAt: "2024-10-18T10:22:00Z",
-    emailVerifiedAt: "2024-01-10T09:15:00Z",
-    archivedAt: null,
-  },
-  {
-    avatarUrl: "https://placehold.co/150x150.png?text=V",
-    bannerUrl: "https://placehold.co/600x400?text=Animal+Shelter",
-    name: "Aisha Khan",
-    bio: "Pre-med student passionate about animal welfare. Actively involved in volunteering at the local animal shelter and raising awareness about responsible pet ownership.",
-    email: "aisha.khan@example.com",
-    role: "student",
-    createdAt: "2024-02-14T15:30:00Z",
-    updatedAt: "2024-10-18 15:04:00Z",
-    emailVerifiedAt: "2024-02-14T15:45:00Z",
-    archivedAt: null,
-  },
-  {
-    avatarUrl: "https://placehold.co/150x150.png?text=M",
-    bannerUrl: "https://placehold.co/600x400?text=Concert+Stage",
-    name: "Liam Jones",
-    bio: "Music education major and aspiring music teacher. Plays guitar and loves exploring different musical genres. Excited to share the joy of music with future generations.",
-    email: "liam.jones@example.com",
-    role: "student",
-    createdAt: "2024-07-12T01:00:00Z",
-    updatedAt: "2024-10-18 15:04:00Z",
-    emailVerifiedAt: "2024-07-12T01:15:00Z",
-    archivedAt: null,
-  },
-  {
-    avatarUrl: "https://placehold.co/150x150.png?text=C",
-    bannerUrl: "https://placehold.co/600x400?text=Concert+Stage",
-    name: "Ria Jones",
-    bio: "Music education major and aspiring music teacher. Plays guitar and loves exploring different musical genres. Excited to share the joy of music with future generations.",
-    email: "ria.jones@example.com",
-    role: "student",
-    createdAt: "2024-07-12T01:00:00Z",
-    updatedAt: "2024-10-18 15:04:00Z",
-    emailVerifiedAt: "2024-07-12T01:15:00Z",
-    archivedAt: null,
-  },
 ];
+
+export const userSeeds = (count: number, role: "student" | "provider") => {
+  faker.setDefaultRefDate("2024-10-17T00:00:00.000Z");
+  const generatedEmails = new Set(); // To store unique emails
+  const seeds = Array.from({ length: count }, () => {
+    let email;
+    do {
+      email = faker.internet.email(); // Generate a new email
+    } while (generatedEmails.has(email)); // Check if email already exists
+
+    generatedEmails.add(email); // Add email to the set
+
+    return {
+      avatarUrl: faker.image.avatar(),
+      bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+      name: faker.person.fullName(),
+      organizationName: role === "student" ? null : faker.company.name(),
+      bio: faker.lorem.sentence(),
+      email: email, // Unique email
+      role,
+      createdAt: faker.date.past().toISOString(),
+      updatedAt: faker.date.recent().toISOString(),
+      emailVerifiedAt: faker.date.recent().toISOString(),
+      archivedAt: null,
+    };
+  });
+
+  return [...seeds, ...legitCreds];
+};

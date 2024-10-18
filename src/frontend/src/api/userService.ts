@@ -9,35 +9,35 @@ export const getUserById = async (id: string) => {
 //GET all user
 export const getAllUsers = async (skip: number, take: number) => {
   const response = await axiosInstance.get(`/users`, {
-    params:{
+    params: {
       skip,
-      take
-    }
+      take,
+    },
   });
-  return response.data
+  return response.data;
 };
 
 //ALL STUDENTS
-export const getAllStudents = async(skip: number, take:number) => {
-  const response = await axiosInstance.get('/students', {
-    params:{
+export const getAllStudents = async (skip: number, take: number) => {
+  const response = await axiosInstance.get("/students", {
+    params: {
       skip,
-      take
-    }
-  })
-  return response.data
-}
+      take,
+    },
+  });
+  return response.data;
+};
 
 //ALL PROVIDERS
-export const getAllProviders = async(skip: number, take:number) => {
-  const response = await axiosInstance.get('/providers', {
-    params:{
+export const getAllProviders = async (skip: number, take: number) => {
+  const response = await axiosInstance.get("/providers", {
+    params: {
       skip,
-      take
-    }
-  })
-  return response.data
-}
+      take,
+    },
+  });
+  return response.data;
+};
 
 //Change Password
 export const changePassword = async (
@@ -71,18 +71,18 @@ export const updateSelf = async (name: string, bio: string) => {
 };
 
 //Delete Account
-export const deleteAccount = async (id:string): Promise<void> => {
-    const response = await axiosInstance.post(`/users/${id}/remove`)
-    return response.data
-}
+export const deleteAccount = async (id: string): Promise<void> => {
+  const response = await axiosInstance.post(`/users/${id}/remove`);
+  return response.data;
+};
 
 //Archive user
 export const archiveUserById = async (id: string) => {
-  const response = await axiosInstance.post(`/protected/users/${id}/archive`)
-  return response.data
-}
+  const response = await axiosInstance.post(`/protected/users/${id}/archive`);
+  return response.data;
+};
 //Reomove archive status
 export const unArchiveUserById = async (id: string) => {
-  const response = await axiosInstance.post(`/protected/users/${id}/unarchive`)
-  return response.data
-}
+  const response = await axiosInstance.post(`/protected/users/${id}/unarchive`);
+  return response.data;
+};

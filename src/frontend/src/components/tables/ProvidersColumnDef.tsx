@@ -166,7 +166,7 @@ export const providersColumns: ColumnDef<User>[] = [
               <>
                 <DropdownMenuItem
                   onClick={() => {
-                    archiveUser(row.original.id);
+                    archiveUser(row.original.id!);
                   }}
                 >
                   Archive
@@ -174,7 +174,7 @@ export const providersColumns: ColumnDef<User>[] = [
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
-                    deleteUser(row.original.id);
+                    deleteUser(row.original.id!);
                   }}
                 >
                   Delete
@@ -184,7 +184,7 @@ export const providersColumns: ColumnDef<User>[] = [
               <>
                 <DropdownMenuItem
                   onClick={() => {
-                    archiveUser(row.original.id);
+                    archiveUser(row.original.id!);
                   }}
                 >
                   Approve
@@ -192,7 +192,7 @@ export const providersColumns: ColumnDef<User>[] = [
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
-                    deleteUser(row.original.id);
+                    deleteUser(row.original.id!);
                   }}
                 >
                   Reject
