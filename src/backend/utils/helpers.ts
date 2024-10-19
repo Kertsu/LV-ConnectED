@@ -1,4 +1,4 @@
-import { VerificationCode } from "Database/entities/verification-code";
+import { VerificationCode } from "../database/entities/verification-code";
 
 export const getCanisterLink = () => {
   let backendCanisterUrl;

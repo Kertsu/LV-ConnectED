@@ -1,5 +1,3 @@
-"use client";
-
 import { registerUser } from "@/api/authService";
 import { Button } from "@/components/ui/button";
 import {
@@ -57,17 +55,20 @@ export default function SignUp() {
     try {
       // TODO: Implement your actual sign-up logic here
       // Temporarily navigate to OTP verification page
-      const response = await registerUser(values);
+      const result = await registerUser(values);
 
-      console.log("Sign up response: ", response);
+      console.log("Sign up response: ", result.user);
+      console.log(result.message);
 
-      navigate("/otp-verification", {
-        state: {
-          otp: response.data.token,
-          email: response.data.user.email,
-          origin: 'register'
-        },
-      }); // Ensure this route is correctly set up
+      if (result.success) {
+        navigate("/otp-verification", {
+          state: {
+            token: result.token,
+            email: result.user.email,
+            origin: "register",
+          },
+        });
+      }
     } catch (error) {
       console.error("Sign-up error:", error); // Log any error
     }

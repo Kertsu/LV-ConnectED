@@ -1,9 +1,8 @@
-import { id } from "azle/src/lib/ic/id";
-import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
+import { User } from "../../../database/entities/user";
 
 // GET all users
 export default class UserController {
@@ -81,7 +80,6 @@ export default class UserController {
     });
   }
 
-
   static async getProviders(request: Request, response: Response) {
     try {
       const skip = request.skip;
@@ -94,15 +92,6 @@ export default class UserController {
           role: "provider",
           providerVerifiedAt: Not(IsNull()),
           validIdUrl: Not(IsNull()),
-        },
-        select: {
-          id: true,
-          avatarUrl: true,
-          bannerUrl: true,
-          name: true,
-          email: true,
-          bio: true,
-          validIdUrl: true,
         },
         skip,
         take,
@@ -119,6 +108,39 @@ export default class UserController {
       httpResponseError(response, null, "Internal Server Error!", 500);
     }
   }
+
+  static async getProviderById(request: Request, response: Response) {
+    try {
+        const id = request.params.id;
+
+        const provider = await User.findOne({
+            where: {
+                id: id,
+                role: "provider",
+                // providerVerifiedAt: Not(IsNull()),
+                // validIdUrl: Not(IsNull()),
+            },
+            select: {
+                id: true,
+                avatarUrl: true,
+                bannerUrl: true,
+                name: true,
+                email: true,
+                bio: true,
+                validIdUrl: true,
+            },
+        });
+
+        if (!provider) {
+            return response.status(404).json({ message: "Provider not found" });
+        }
+
+        return httpResponseSuccess(response, provider, null, 200);
+    } catch (error) {
+        console.log("Error fetching provider: ", error);
+        return httpResponseError(response, null, "Internal Server Error!", 500);
+    }
+}
 
   static async getNonVerifiedProviders(request: Request, response: Response) {
     try {
@@ -166,14 +188,6 @@ export default class UserController {
           archivedAt: IsNull(),
           emailVerifiedAt: Not(IsNull()),
           role: "student",
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          bio: true,
-          avatarUrl: true,
-          bannerUrl: true,
         },
         skip,
         take,

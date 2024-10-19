@@ -1,8 +1,8 @@
-import { Post } from "Database/entities/post";
-import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
+import { Post } from "../../../database/entities/post";
+import { User } from "../../../database/entities/user";
 
 export default class AdminController {
   static async archiveUserById(request: Request, response: Response) {

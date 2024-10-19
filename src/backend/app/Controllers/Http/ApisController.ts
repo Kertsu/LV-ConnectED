@@ -1,5 +1,5 @@
-import { Configuration } from 'Database/entities/configuration';
 import { Request, Response } from 'express';
+import { Configuration } from '../../../database/entities/configuration';
 
 export default class ApisController {
     static async greet(request: Request, response: Response) {

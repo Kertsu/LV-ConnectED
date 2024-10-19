@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { Database } from "../index";
 import { User } from "Database/entities/user";
-import { bookmarkSeeds, feedbackSeeds, postSeeds, userSeeds } from "./seed";
+import { bookmarkSeeds, feedbackSeeds, postSeeds, providerSeeds, studentSeeds } from "./seed";
 import { Post } from "Database/entities/post";
 import { Feedback } from "Database/entities/feedback";
 import { Bookmark } from "Database/entities/bookmark";
@@ -11,20 +11,37 @@ export class Seeder {
 
   constructor(private db: Database) {}
 
-  public async seedUsers(count: number, role: "student" | "provider", callback?: () => void) {
+  public async seedStudents(count: number, callback?: () => void) {
     try {
       this.dataSource = await this.db.getDataSource();
-      const users = User.create(userSeeds(count, role));
+      const users = User.create(await studentSeeds(count));
 
       await this.dataSource.getRepository(User).save(users);
 
-      console.log("Users seeded successfully!");
+      console.log("Students seeded successfully!");
 
       if (callback) {
         callback();
       }
     } catch (err) {
-      console.error("Error while seeding users:", err);
+      console.error("Error while seeding students:", err);
+      throw err;
+    }
+  }
+  public async seedProviders(count: number, callback?: () => void) {
+    try {
+      this.dataSource = await this.db.getDataSource();
+      const users = User.create(await providerSeeds(count));
+
+      await this.dataSource.getRepository(User).save(users);
+
+      console.log("Providers seeded successfully!");
+
+      if (callback) {
+        callback();
+      }
+    } catch (err) {
+      console.error("Error while seeding providers:", err);
       throw err;
     }
   }

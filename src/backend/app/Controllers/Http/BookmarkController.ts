@@ -1,6 +1,6 @@
-import { Bookmark } from "Database/entities/bookmark";
-import { User } from "Database/entities/user";
 import { Request, Response } from "express";
+import { Bookmark } from "../../../database/entities/bookmark";
+import { User } from "../../../database/entities/user";
 
 export default class BookmarkController {  
     static async getUserBookmarks(request: Request, response: Response) {

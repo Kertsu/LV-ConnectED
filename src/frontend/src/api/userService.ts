@@ -25,7 +25,7 @@ export const getAllStudents = async (page: number, take: number) => {
       take,
     },
   });
-  console.log("User Service",response.data); // Add this line to log the response data
+  console.log("User Service", response.data); // Add this line to log the response data
   return response.data;
 };
 
@@ -38,6 +38,16 @@ export const getAllProviders = async (page: number, take: number) => {
     },
   });
   return response.data;
+};
+
+export const getProviderById = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/providers/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching provider by ID:", error);
+    throw error;
+  }
 };
 
 //Change Password

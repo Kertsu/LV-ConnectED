@@ -11,7 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/hooks/use-auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -26,7 +25,6 @@ const signInSchema = z.object({
 export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); // Initialize navigate function for redirection
-  const { login } = useAuth();
 
   // Initialize the form with react-hook-form and Zod for validation
   const signInForm = useForm<z.infer<typeof signInSchema>>({
@@ -44,13 +42,15 @@ export default function SignIn() {
       // Simulate sign-in process for development purposes
       // TODO: Replace with actual sign-in logic in production
       console.log("Sign in", values);
-      const response = await loginUser(values);
+      const result = await loginUser(values);
+
+      console.log(result.message);
 
       // For now, navigate the user to the home page after sign-in
       navigate("/otp-verification", {
         state: {
-          otp: response.data.token,
-          email: response.data.user.email,
+          token: result.token,
+          email: result.user.email,
           origin: "login",
         },
       });

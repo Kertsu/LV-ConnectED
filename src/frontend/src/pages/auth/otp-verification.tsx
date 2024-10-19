@@ -16,7 +16,6 @@ import { ToastAction } from "@/components/ui/toast";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -29,12 +28,6 @@ const FormSchema = z.object({
 
 export function OtpVerification() {
   const location = useLocation();
-  const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
-  const [otpOrigin, setOTPOrigin] = useState<"register" | "login">();
-  setOTPOrigin(location.state.origin);
-  setEmail(location.state.email as string);
-  setToken(location.state.token as string);
   const { login } = useAuth();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -57,15 +50,31 @@ export function OtpVerification() {
 
   const handleVerifyOtp = async ({ otp }: z.infer<typeof FormSchema>) => {
     try {
-      if (otpOrigin == "register") {
-        const response = await verifyRegistrationOtp({ token, otp, email });
-        login(response.data.token);
-      } else {
-        const response = await verifyLoginOtp({ token, otp, email });
-        login(response.data.token);
-      }
+      if (location.state.origin == "register") {
+        const result = await verifyRegistrationOtp({
+          token: location.state.token,
+          email: location.state.email,
+          otp,
+        });
 
-      navigate("/home");
+        console.log("OTP: ", otp);
+
+        if (result.success == 1) {
+          login(result.accessToken);
+          navigate("/home");
+        }
+      } else {
+        const result = await verifyLoginOtp({
+          token: location.state.token,
+          email: location.state.email,
+          otp,
+        });
+
+        if (result.success == 1) {
+          login(result.accessToken);
+          navigate("/home");
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -74,8 +83,11 @@ export function OtpVerification() {
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleVerifyOtp)}>
-          <div className="w-full max-w-md rounded-lg shadow-lg p-6 border">
+        <form
+          onSubmit={form.handleSubmit(handleVerifyOtp)}
+          className="w-full h-full flex flex-col justify-center items-center"
+        >
+          <div className="w-full h-full max-w-md rounded-lg shadow-lg p-6 border">
             <h2 className="text-2xl font-semibold text-center mb-4">
               Enter OTP
             </h2>
@@ -90,7 +102,7 @@ export function OtpVerification() {
                   <FormItem>
                     <FormLabel>One-Time Password</FormLabel>
                     <FormControl>
-                      <InputOTP maxLength={6}>
+                      <InputOTP maxLength={6} {...field}>
                         <InputOTPGroup>
                           <InputOTPSlot
                             index={0}

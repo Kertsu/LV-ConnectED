@@ -1,11 +1,11 @@
 // import cors from 'cors';
 import express from "express";
 
-import ExceptionHandler from "./app/Exceptions/Handler";
-import { routes } from "./start/routes";
 import cors from "cors";
 import dotenv from "dotenv";
 import { getCanisterLink } from "Helpers/helpers";
+import ExceptionHandler from "./app/Exceptions/Handler";
+import { routes } from "./start/routes";
 
 export function CreateServer() {
   dotenv.config();

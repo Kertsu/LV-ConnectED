@@ -1,7 +1,7 @@
 import initSqlJs, { Database as SqlJsDatabase } from 'sql.js/dist/sql-asm.js';
 import { DataSource, EntitySchema, Logger, MixedList } from 'typeorm';
 
-import { DatabaseStorage, DatabaseStorageInterface } from '../database/storage';
+import { DatabaseStorage, DatabaseStorageInterface } from './storage';
 
 export type DatabaseOptions = {
   storage: DatabaseStorageInterface;

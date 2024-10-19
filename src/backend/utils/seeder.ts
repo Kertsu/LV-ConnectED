@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Feedback } from 'Database/entities/feedback';
-import { Post } from 'Database/entities/post';
 import { PostCategoryType } from '../constants';
+import { Feedback } from '../database/entities/feedback';
+import { Post } from '../database/entities/post';
 import { User } from '../database/entities/user';
 
 export default async function seeder(count: number) {

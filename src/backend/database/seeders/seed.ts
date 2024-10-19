@@ -1,101 +1,130 @@
 import { faker } from "@faker-js/faker";
-import { User } from "Database/entities/user";
 import { PostCategoryType, UserTypes } from "../../constants";
-import { Post } from "Database/entities/post";
-export const legitCreds = [
+import { Post } from "../entities/post";
+import { User } from "../entities/user";
+export const legitCreds: UserInterface[] = [
   {
     avatarUrl:
       "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/452912470_2526121527595306_3752199441102383149_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEtCgs-XyXL89ENkqy7JG3peWlRnJXahMF5aVGcldqEwU1hJd6qhyhKUGWsK52KiDE16tK8oTnAWiBcfTghtwJt&_nc_ohc=nyj-K21CRl8Q7kNvgGHFtoL&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AxNTWZFhCZdA3OBSWam6QD_&oh=00_AYAWq-elKA1RxTQIYt2OvUbsNU1BC78UgYAoOUl34JTN_w&oe=67110D26",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+    validIdUrl: null,
     name: "Johnmack Faeldonia",
+    organizationName: null,
     bio: "A passionate entrepreneur.",
     email: "johnmarkfaeldonia@student.laverdad.edu.ph",
+    emailVerifiedAt: "2024-09-01T12:00:00Z",
+    providerVerifiedAt: null,
     role: "student",
+    type: null,
     createdAt: "2024-01-01T12:00:00Z",
     updatedAt: "2024-09-01T12:00:00Z",
-    emailVerifiedAt: "2024-09-01T12:00:00Z",
     archivedAt: null,
   },
   {
     avatarUrl:
       "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/440166746_25371551272492353_7022797428020999409_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeE6YN-LerRQeT9r5QJmhKUTkjRxWwzQgW6SNHFbDNCBbs5Je_9d1VcuTlg6UQQz3Y7v3pPfWBH0ypDLTs6CYgp8&_nc_ohc=r6D8cy67UfcQ7kNvgHXnr5G&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AB8ID44fIEKmsB3Fz3ePKgZ&oh=00_AYCaMhckXWRn1M8-5O8w3C2a2YHpIS6RPT9NDX-Vioj2BQ&oe=67112F0E",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+    validIdUrl: null,
     name: "Kurtd Daniel Bigtas",
+    organizationName: null,
     bio: "Tech enthusiast and problem solver.",
     email: "kurtddbigtas@gmail.com",
+    emailVerifiedAt: "2024-09-15T12:00:00Z",
+    providerVerifiedAt: null,
     role: "admin",
+    type: null,
     createdAt: "2024-02-15T12:00:00Z",
     updatedAt: "2024-09-15T12:00:00Z",
-    emailVerifiedAt: "2024-09-15T12:00:00Z",
     archivedAt: null,
   },
   {
     avatarUrl:
       "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+    validIdUrl: null,
     name: "Raven Dela Rama",
+    organizationName: null,
     bio: "Engineer with a love for innovation.",
     email: "johnraybendelarama@student.laverdad.edu.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: null,
     role: "student",
+    type: null,
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
-    emailVerifiedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
   },
   {
     avatarUrl:
       "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+    validIdUrl: null,
     name: "Allen Magadia",
+    organizationName: null,
     bio: "Engineer with a love for innovation.",
     email: "allenmagadia@student.laverdad.edu.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: null,
     role: "student",
+    type: null,
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
-    emailVerifiedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
   },
   {
     avatarUrl:
       "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+    validIdUrl: null,
     name: "Jethro Cadang",
+    organizationName: null,
     bio: "Engineer with a love for innovation.",
     email: "jethrocadang@student.laverdad.edu.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: null,
     role: "student",
+    type: null,
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
-    emailVerifiedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
   },
+];
+
+const legitProviders: UserInterface[] = [
   {
-    avatar:
+    avatarUrl:
       "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/461624352_509560758619382_8813051501729332811_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGWq-cz_bLE0izRSpJd198AeVoW8zz7ZXt5WhbzPPtle2C6prcSTLd3ND27KFsKVjjUqffhuNqZ4xIpEXrBJn_7&_nc_ohc=6AWu5jpNDGYQ7kNvgFJ9ZQi&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=AxCU6R5kOk8aCfekgDjq66z&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA3FC",
     bannerUrl:
       "https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/449449169_447660674809391_692585298774003021_n.jpg?stp=dst-jpg_s960x960&_nc_cat=106&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFJuJzTCK2Z3odEydsAr1rJYsTexpZPKg1ixN7Glk8qDUu7Q_JCZVw9d4nKgEdy7qKBB_sO2fVWhHEqMiOUNG6T&_nc_ohc=6XaoIN0GI9QQ7kNvgFOZeVG&_nc_zt=23&_nc_ht=scontent.fcrk4-1.fna&_nc_gid=ADYuKfczXQ9LMZkCMLdcZYi&oh=00_AYCeJ0aQh1azc6a-sLBpIsX9rmd4RsjmKNYQ5H9-BVKnww&oe=670F870B",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
     name: "La Verdad Christian College, Inc. - Caloocan",
+    organizationName: "La Verdad Christian College, Inc. - Caloocan",
     bio: "Wisdom based on the truth is priceless.",
     email: "admission.caloocan@laverdad.edu.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
     role: "provider",
-    organizationName: "La Verdad Christian College, Inc. - Caloocan",
+    type: "school",
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
-    emailVerifiedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
   },
   {
-    avatar:
+    avatarUrl:
       "https://scontent.fcrk2-1.fna.fbcdn.net/v/t39.30808-6/461924271_566194232644520_3597166314315883364_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQpmYeMvXyPt4ejVgl-0tA6NUyqkLlyuTo1TKqQuXK5CYPQXOXvcT_6ooQuEMnLHOrI-DF6tfyyeAr37Iyf7zT&_nc_ohc=qw6fFIIpGLYQ7kNvgG_3aAY&_nc_zt=23&_nc_ht=scontent.fcrk2-1.fna&_nc_gid=A_kTzIQNVqBsU_0LBQgmWaz&oh=00_AYAbZur3KVqE_10b4xHP4XgB-DoEQXWWzmPK5Qmy93z69g&oe=670FA7B9",
     bannerUrl:
       "https://scontent.fcrk4-2.fna.fbcdn.net/v/t39.30808-6/462693785_572297352034208_4072350988270131867_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFxBIb5Ks6pVotefQzSmLg2vtFEeWRvEfG-0UR5ZG8R8UKS6JjidRPX9j7J9h9xwYhQdTNurlH26M6MCoMhw-9i&_nc_ohc=PHe0jc1YwpoQ7kNvgFGQUBI&_nc_zt=23&_nc_ht=scontent.fcrk4-2.fna&_nc_gid=AsqXPYjBH7H6yMKrcvnDH9x&oh=00_AYDyB5P75ExnxfKLuvVtJztyx3M2aJTRK343Pl9kJny8Og&oe=670FADBD",
+    validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
     name: "La Verdad Christian College, Inc. - Apalit, Pampanga",
+    organizationName: "La Verdad Christian College, Inc. - Apalit, Pampanga",
     bio: "Wisdom based on the truth is priceless.",
     email: "info@laverdad.edu.ph",
+    emailVerifiedAt: "2024-09-20T12:00:00Z",
+    providerVerifiedAt: "2024-09-20T12:00:00Z",
     role: "provider",
-    organizationName: "La Verdad Christian College, Inc. - Apalit, Pampanga",
+    type: "school",
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",
-    emailVerifiedAt: "2024-09-20T12:00:00Z",
     archivedAt: null,
   },
 ];
@@ -146,43 +175,69 @@ interface BookmarkInterface {
 
 faker.setDefaultRefDate("2024-10-17T00:00:00.000Z");
 
-export const userSeeds = (count: number, role: "student" | "provider") => {
-  const generatedEmails = new Set();
-  const seeds = Array.from(
-    { length: count },
-    (index: number): UserInterface => {
+export const studentSeeds = async (count: number) => {
+  const seeds = await Promise.all(
+    Array.from({ length: count }, async (): Promise<UserInterface> => {
       let email;
       do {
         email = faker.internet.email();
-      } while (generatedEmails.has(email));
-
-      generatedEmails.add(email);
+      } while (await User.findOne({ where: { email: email } }));
 
       return {
         avatarUrl: faker.image.avatar(),
         bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
         name: faker.person.fullName(),
-        organizationName: role === "student" ? null : faker.company.name(),
+        organizationName: null,
         bio: faker.lorem.sentence(),
         email: email,
-        role,
+        role: "student",
         createdAt: faker.date.past().toISOString(),
         updatedAt: faker.date.recent().toISOString(),
         emailVerifiedAt: faker.date.recent().toISOString(),
         archivedAt: null,
-        type: role === "student" ? null : faker.helpers.arrayElement(UserTypes),
-        validIdUrl: role === "student" ? null : faker.image.url(),
-        providerVerifiedAt:
-          role === "provider"
-            ? index % 3 === 0
-              ? faker.date.past().toISOString()
-              : null
-            : null,
+        type: null,
+        validIdUrl: null,
+        providerVerifiedAt: null,
       };
-    }
+    })
   );
 
   return [...seeds, ...legitCreds];
+};
+
+export const providerSeeds = async (
+  count: number
+): Promise<UserInterface[]> => {
+  const seeds = await Promise.all(
+    Array.from({ length: count }, async (): Promise<UserInterface> => {
+      let email;
+      do {
+        email = faker.internet.email();
+      } while (await User.findOne({ where: { email: email } }));
+
+      return {
+        avatarUrl: faker.image.avatar(),
+        bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
+        name: faker.person.fullName(),
+        organizationName: faker.company.name(),
+        bio: faker.lorem.sentence(),
+        email: email,
+        role: "provider",
+        createdAt: faker.date.past().toISOString(),
+        updatedAt: faker.date.recent().toISOString(),
+        emailVerifiedAt: faker.date.recent().toISOString(),
+        archivedAt: null,
+        type: faker.helpers.arrayElement(UserTypes),
+        validIdUrl: faker.image.url(),
+        providerVerifiedAt:
+          faker.helpers.arrayElement([0, 1, 2]) === 2
+            ? null
+            : faker.date.recent().toISOString(),
+      };
+    })
+  );
+
+  return [...seeds, ...legitProviders];
 };
 
 export const postSeeds = async (count: number) => {

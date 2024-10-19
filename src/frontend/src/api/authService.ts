@@ -1,12 +1,5 @@
 import { AxiosError } from 'axios';
-import ky from 'ky';
-import axiosInstance, { API_URL } from './axiosConfig';
-
-export interface ResponseType {
-  success: number;
-  message: string | null;
-  data: any | null
-}
+import axiosInstance from './axiosConfig';
 
 // Function to handle user registration
 export const registerUser = async ({name, email, role}: {
@@ -15,36 +8,34 @@ export const registerUser = async ({name, email, role}: {
   role: "student" | "provider"
 }) => {
   try {
-    const response = await ky.post<ResponseType>('auth/register', {
-      prefixUrl: API_URL!,
-      json: {
+    const response = await axiosInstance.post('/auth/register', {
         name,
         email,
         role
-      }
-    }).json();
+    });
 
-    return response;
+    return response.data;
   } catch (error) {
     throw "Something went wrong!";
   }
 };
 
 // Function to handle user login
-export const loginUser = async ({email}: {
+export const loginUser = async ({ email }: {
   email: string;
 }) => {
   try {
-    const response = await ky.post<ResponseType>('auth/login', {
-      prefixUrl: API_URL,
-      json: {
-        email
-      }
-    }).json();
+    const response = await axiosInstance.post('/auth/login', {
+      email
+    });
 
-    return response;
+    return response.data;
   } catch (error) {
-    throw "Something went wrong!";
+    if (error instanceof AxiosError) {
+      throw error.message;
+    } else {
+      throw "Something went wrong!";
+    }
   }
 };
 
@@ -55,16 +46,13 @@ export const verifyRegistrationOtp = async ({ otp, email, token }: {
   token: string;
 }) => {
   try {
-    const response = await ky.post<ResponseType>('auth/verify-register', {
-      prefixUrl: API_URL,
-      json: {
-        otp,
-        email,
-        token
-      }
-    }).json();
+    const response = await axiosInstance.post('/auth/verify-register', {
+      otp,
+      email,
+      token
+    });
 
-    return response;
+    return response.data;
   } catch (error) {
     throw 'An unexpected error occurred during OTP verification';
   }
@@ -77,16 +65,13 @@ export const verifyLoginOtp = async ({ otp, email, token }: {
   token: string;
 }) => {
   try {
-    const response = await ky.post<ResponseType>('auth/verify-login', {
-      prefixUrl: API_URL,
-      json: {
+    const response = await axiosInstance.post('/auth/verify-login', {
         otp,
         email,
         token
-      }
-    }).json();
+    });
 
-    return response;
+    return response.data;
   } catch (error) {
     throw 'An unexpected error occurred during OTP verification';
   }
@@ -109,7 +94,7 @@ export const resendOtp = async (email: string) => {
 // Function to get logged-in user details
 export const getCurrentUser = async () => {
   try {
-    const response = await axiosInstance.get('/auth/me');
+    const response = await axiosInstance.post("/@self");
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

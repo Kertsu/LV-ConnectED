@@ -34,6 +34,7 @@ Route.post("/auth/resend-otp", AuthController.resendOtp);
 Route.get("/users/:id", UserController.findById);
 Route.get("/users", Pagination.paginate, UserController.getAll);
 Route.get("/providers", Pagination.paginate, UserController.getProviders);
+Route.get("/providers/:id", UserController.getProviderById);
 Route.get(
   "/non-verified-providers",
   Pagination.paginate,

@@ -1,17 +1,17 @@
 import * as bcryptjs from "bcryptjs";
-import { User } from "Database/entities/user";
-import { VerificationCode } from "Database/entities/verification-code";
+import crypto from "crypto";
 import { Request, Response } from "express";
 import { generateOTP } from "Helpers/helpers";
 import { signToken, verifyToken } from "Helpers/jwt";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
-import { loginSchema, registerSchema } from "Helpers/zod-schemas";
+import { registerSchema } from "Helpers/zod-schemas";
 import { IsNull } from "typeorm";
+import { User } from "../../../database/entities/user";
+import { VerificationCode } from "../../../database/entities/verification-code";
 import {
   httpResponseError,
   httpResponseSuccess,
 } from "../../../utils/response";
-import crypto, { verify } from "crypto";
 
 export default class AuthController {
   static async getTokenAndOtp() {
@@ -25,7 +25,7 @@ export default class AuthController {
 
   static async register(request: Request, response: Response) {
     try {
-      const { data, success, error } = registerSchema.safeParse(request.body);
+      const { data, success } = registerSchema.safeParse(request.body);
 
       if (!success) {
         return httpResponseError(response, null, "Bad request", 400);
@@ -246,7 +246,8 @@ export default class AuthController {
       return httpResponseSuccess(
         response,
         { user, accessToken: jsonData.data.token },
-        "Email verified"
+        "Email verified",
+        200
       );
     } catch (error) {
       return httpResponseError(response, null, "Internal server error!", 500);
@@ -255,14 +256,15 @@ export default class AuthController {
 
   static async login(request: Request, response: Response) {
     try {
-      const { data, success, error } = loginSchema.safeParse(request.body);
+      // const { data, success, error } = loginSchema.safeParse(request.body);
+      const { email } = request.body;
 
-      if (!success) {
+      if (!email) {
         return httpResponseError(response, null, "Bad request", 400);
       }
 
       const user = await User.findOneBy({
-        email: data.email,
+        email,
       });
 
       if (!user) {
@@ -277,12 +279,23 @@ export default class AuthController {
       const { otp, token, hashedToken, hashedOtp } =
         await AuthController.getTokenAndOtp();
 
-      await VerificationCode.insert({
-        code: hashedOtp,
-        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
-        user: user,
-        token: hashedToken,
-      });
+      try {
+        await VerificationCode.delete({
+          user: {
+            id: user.id
+          }
+        });
+        
+          await VerificationCode.insert({
+              code: hashedOtp,
+              expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+              user: user,
+              token: hashedToken,
+          });
+      } catch (dbError) {
+          console.error("Database error:", dbError);
+          return httpResponseError(response, null, "Failed to insert verification code", 500);
+      }
 
       const emailMessage: EmailMessage = {
         body: {
@@ -297,15 +310,20 @@ export default class AuthController {
           ],
         },
       };
-
-      await sendEmail(
-        emailMessage,
-        user.email,
-        "[ConnectED] Your One-Time Password"
-      );
-
-      httpResponseSuccess(response, { user, token });
+      try {
+        await sendEmail(
+            emailMessage,
+            user.email,
+            "[ConnectED] Your One-Time Password"
+        );
+      } catch (emailError) {
+        console.error("Failed to send email:", emailError);
+        return httpResponseError(response, null, "Failed to send OTP email", 500);
+      }
+      
+      httpResponseSuccess(response, { user, token }, null, 200);
     } catch (error) {
+      console.log(error);
       return httpResponseError(response, null, "Internal Server Error", 500);
     }
   }
@@ -389,7 +407,7 @@ export default class AuthController {
         return httpResponseError(response, null, "Invalid token", 400);
       }
 
-      await VerificationCode.delete(verificationCode.id);
+      await VerificationCode.delete({ id: verificationCode.id });
 
       const jsonData = await signToken({ id: user.id, role: user.role }, "7d");
 
@@ -405,7 +423,7 @@ export default class AuthController {
       return httpResponseSuccess(response, {
         user,
         accessToken: jsonData.data.token,
-      });
+      }, null, 200);
     } catch (error) {
       return httpResponseError(response, null, "Internal server error!", 500);
     }
@@ -493,7 +511,7 @@ export default class AuthController {
 
       await sendEmail(emailMessage, user.email, "[ConnectED] Resend OTP");
 
-      httpResponseSuccess(response, { user, token });
+      httpResponseSuccess(response, { user, token }, null, 200);
     } catch (error) {
       return httpResponseError(response, null, "Internal server error!", 500);
     }

@@ -1,6 +1,6 @@
-import { Feedback } from "Database/entities/feedback";
-import { User } from "Database/entities/user";
 import { Request, Response } from "express";
+import { Feedback } from "../../../database/entities/feedback";
+import { User } from "../../../database/entities/user";
 
 export default class FeedbackController {
     static async getPostFeedbacks(request: Request, response: Response) {
