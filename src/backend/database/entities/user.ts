@@ -34,7 +34,7 @@ export class User extends BaseEntity {
   name: string;
 
   @Column({ nullable: true, type: "varchar" })
-  organizationName: string;
+  organizationName: string | null;
 
   @Column({ nullable: true, type: "text" })
   bio: string | null;
@@ -50,6 +50,9 @@ export class User extends BaseEntity {
 
   @Column({ type: "text" })
   role: string;
+
+  @Column({ nullable: true, type: "text" })
+  type: string | null;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -42,17 +42,17 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     cell: ({ row }) => (
       <div className="flex flex-row items-center gap-2 sm:gap-3">
         <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-          <AvatarImage src={row.original.avatarUrl} />
+          <AvatarImage src={row.original.user.avatarUrl} />
           <AvatarFallback>
-            {row.original.name ? row.original.name.charAt(0) : "A"}
+            {row.original.user.name ? row.original.user.name.charAt(0) : "A"}
           </AvatarFallback>
         </Avatar>
         <div>
           <p className="text-sm truncate max-w-[150px] md:max-w-none">
-            {row.original.name}
+            {row.original.user.name}
           </p>
           <p className="text-xs truncate max-w-[150px] sm:max-w-none text-muted-foreground">
-            {row.original.email}
+            {row.original.user.email}
           </p>
         </div>
       </div>
@@ -63,7 +63,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     header: "Post Title",
     cell: ({ row }) => (
       <p
-        dangerouslySetInnerHTML={{ __html: row.original.postTitle }}
+        dangerouslySetInnerHTML={{ __html: row.original.title }}
         className="truncate "
       ></p>
     ),
@@ -72,7 +72,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
     accessorKey: "postType",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.original.postType;
+      const status = row.original.type;
       return (
         <Badge variant={status === "internship" ? "default" : "destructive"}>
           {status === "internship" ? "Active" : "Archived"}
@@ -87,7 +87,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
   {
     accessorKey: "postDate",
     header: "Date Posted",
-    cell: ({ row }) => <div className="truncate">{row.original.postDate}</div>,
+    cell: ({ row }) => <div className="truncate">{row.original.createdAt}</div>,
   },
   {
     accessorKey: "postThumbnailSource",
@@ -100,7 +100,7 @@ export const postsColumnDefs: ColumnDef<Post>[] = [
         <DialogContent className="w-full max-w-lg">
           <img
             className="w-full"
-            src={row.original.postThumbnailSource}
+            src={row.original.thumbnail}
             alt="id"
           />
         </DialogContent>

@@ -1,20 +1,30 @@
-import { BaseEntity, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Post } from './post';
-import { User } from './user';
+import {
+  BaseEntity,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
+import { Post } from "./post";
+import { User } from "./user";
 
 @Entity({
-  name: 'bookmarks',
+  name: "bookmarks",
 })
 export class Bookmark extends BaseEntity {
   @PrimaryGeneratedColumn()
-    id: string;
-    
-    @ManyToOne(() => User, user => user.bookmarks)
-    user: User;
+  id: string;
 
-    @ManyToOne(() => Post, post => post.bookmarks)
-    post: Post;
+  @ManyToOne(() => User, (user) => user.bookmarks)
+  user: User;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @ManyToOne(() => Post, (post) => post.bookmarks)
+  post: Post;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

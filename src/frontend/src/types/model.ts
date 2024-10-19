@@ -1,42 +1,37 @@
 export interface User {
-  id?: string;
-  avatarUrl?: string;
+  id?: number;
+  avatarUrl?: string ;
   bannerUrl?: string;
   validIdUrl?: string;
-  name?: string;
-  organizationName?: string;
+  name: string;
+  organizationName?: string | null;
   bio?: string;
   email: string;
-  emailVerifiedAt?: string;
-  providerVerifiedAt?: string;
-  role: "admin" | "provider" | "student";
-  archivedAt?: string;
+  emailVerifiedAt?: string | null;
+  providerVerifiedAt?: string | null;
+  role: string | "admin" | "student" | "provider";
+  type?: string | "school" | "government" | "corporate" | "other";
   createdAt: string;
   updatedAt: string;
-  providerVerfiedAt?:string
+  archivedAt?: string | null;
 }
 
 export interface Feedback {
-  id: string;
-  userId: User["id"];
-  rating: number;
-  comment?: string;
+  id: number;
+  rate: number;
+  content: string;
   createdAt: string;
   updatedAt: string;
+  user: User;
 }
 
 export interface Post {
-  id: string;
-  email: string;
-  name: string;
-  avatarUrl: string;
-  postTitle: string;
-  postThumbnailSource: string;
-  postDescription: string;
-  postRatingCount: number;
-  postBookmarkCount: number;
-  postCommentCount: number;
-  postType: string;
-  postDate: string;
-  archivedAt?: string;
+  id: number;
+  thumbnail: string;
+  title: string;
+  type: string;
+  content: string;
+  createdAt: string;
+  user: User;
+  feedbacks: Feedback[];
 }

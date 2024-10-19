@@ -19,7 +19,7 @@ export default function AdminUserManagement() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="providers" className="mt-4">
-          <ProvidersTable/>
+          {/* <ProvidersTable/> */}
         </TabsContent>
         <TabsContent value="students" className="mt-4">
           <StudentsTable />

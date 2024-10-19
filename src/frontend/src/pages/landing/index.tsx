@@ -9,6 +9,85 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import BlurFade from "@/components/ui/blur-fade";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { useTheme } from "@/components/theme-provider";
+import WordFadeIn from "@/components/ui/word-fade-in";
+import { cn } from "@/lib/utils";
+import Marquee from "@/components/ui/marquee";
+
+const reviews = [
+  {
+    name: "DOST",
+    username: "@DOST",
+    // body: "I've never seen anything like this before. It's amazing. I love it.",
+    img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293524/dost_wqm8fs.png",
+  },
+  {
+    name: "DepEd",
+    username: "@DepEd",
+    
+    img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293534/GgmPiSLC_400x400_ecauou.jpg",
+  },
+  {
+    name: "SM Foundation",
+    username: "@SM Foundation",
+    
+    img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293533/sm_sno0b1.png",
+  },
+  {
+    name: "Jane",
+    username: "@jane",
+    
+    img: "https://res.cloudinary.com/djsrqk4fc/image/upload/v1729293532/LVCC_s8wjgj.jpg",
+  },
+  {
+    name: "Jenny",
+    username: "@jenny",
+    
+    img: "https://avatar.vercel.sh/jenny",
+  },
+  {
+    name: "James",
+    username: "@james",
+    
+    img: "https://avatar.vercel.sh/james",
+  },
+];
+ 
+const firstRow = reviews.slice(0, reviews.length / 2);
+
+const ReviewCard = ({
+  img,
+  name,
+  username,
+  // body,
+}: {
+  img: string;
+  name: string;
+  username: string;
+  // body: string;
+}) => {
+  return (
+    <figure
+      className={cn(
+        "relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
+        // light styles
+        "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
+        // dark styles
+        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
+      )}
+    >
+      <div className="flex flex-row items-center gap-2">
+        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <div className="flex flex-col">
+          <figcaption className="text-sm font-medium dark:text-white">
+            {name}
+          </figcaption>
+          <p className="text-xs font-medium dark:text-white/40">{username}</p>
+        </div>
+      </div>
+      {/* <blockquote className="mt-2 text-sm">{body}</blockquote> */}
+    </figure>
+  );
+};
 
 
 const Home: React.FC = () => {
@@ -36,101 +115,123 @@ const Home: React.FC = () => {
             Your Trusted Gateway to Scholarships and Internships.
           </p>
         </BlurFade>
-        
       </div>
       {/* <Separator /> */}
 
       <BlurFade yOffset={50} delay={0.50} duration={0.50} inView>
         <div className="relative flex justify-center items-center w-full h-auto md:w-3/4 md:h-full mx-auto bottom-32">
-          { theme.theme == 'dark' && (
+          { theme.theme == 'dark' ? (
             <img
-            src="https://res.cloudinary.com/djsrqk4fc/image/upload/v1729225848/landing_page_1st_w9ky9l.png"
+            src="https://res.cloudinary.com/djsrqk4fc/image/upload/v1729279630/landing_1_epj0sk.png"
             alt="Example Image"
-            className="w-full h-full border-8 rounded-lg"
-          />)
-          }
-          {/* <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent w-full h-full"></div> */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"/>
+            className="w-full h-full border-8 border-b-0 rounded-lg"
+          />) : (
+            <img
+            src="https://res.cloudinary.com/djsrqk4fc/image/upload/v1729279635/landing_2_fbqyex.png"
+            alt="Example Image"
+            className="w-full h-full border-8 border-b-0 rounded-lg"
+          />)}
+          { theme.theme == 'dark' ? (
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"/>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent"/>
+          )}
         </div>
+        
       </BlurFade>
       <div className="flex flex-col gap-4 items-center container mx-auto">
       <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
-              What&apos;s different about ConnectEd?
+              <WordFadeIn words="What's different about ConnectEd?" />
             </h2>
             <div className="grid gap-6 lg:grid-cols-3">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Centralized Platform for Scholarships and Internships</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>ConnectED brings together a wide range of scholarships and internships 
-                    in one place, making it easier than ever to explore, compare, and discover 
-                    the opportunities that are right for you.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Verified Opportunities</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>
-                  Focus on applying with confidence, knowing that every opportunity 
-                  on our platform is authentic.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Empowering Organizations to Reach the Right Candidates</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p> ConnectED makes it easy to reach qualified candidates. 
-                    With verified student profiles and a targeted user base, 
-                    your opportunities will get in front of the people who matter.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Advanced Solutions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>Supports remote work policies while improving team collaboration.</p>
-                </CardContent>
-              </Card>
+              <BlurFade delay={0.25} inView>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Centralized Scholarship and Iternship Hub</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>A one-stop platform for students to browse scholarships from multiple verified sources.
+                    </p>
+                  </CardContent>
+                </Card>
+              </BlurFade>
+              <BlurFade delay={0.30} inView>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Admin-Verified Providers</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>
+                    Ensure all providers and opportunities listed are vetted for authenticity.
+                    </p>
+                  </CardContent>
+                </Card>
+              </BlurFade>
+              <BlurFade delay={0.45} inView>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Empowering Organizations to Reach the Right Candidates</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p> ConnectED makes it easy to reach qualified candidates. 
+                      With verified student profiles and a targeted user base, 
+                      your opportunities will get in front of the people who matter.
+                    </p>
+                  </CardContent>
+                </Card>
+              </BlurFade>
+              <BlurFade delay={0.50} inView>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Rating and Reviews</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Empower students to share their experiences and rate scholarships, fostering transparency and trust.
+                    </p>
+                  </CardContent>
+                </Card>
+              </BlurFade>
+              <BlurFade delay={0.55} inView>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>User-Friendly Interface</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Navigate easily through a clean and intuitive platform, ensuring both students and organizations can interact seamlessly.</p>
+                  </CardContent>
+                </Card>
+              </BlurFade>
+              <BlurFade delay={0.60} inView>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Internship/OJT Opportunities</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Explore not just scholarships but also internship opportunities to gain practical experience.</p>
+                  </CardContent>
+                </Card>
+              </BlurFade>
             </div>
           </div>
       </div>
 
       {/* test only for top providers */}
 
-      <div className="flex flex-col gap-4 items-center container mx-auto mt-6">
-      <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
-              What We Have to Offer?
-            </h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[
-                { icon: Briefcase, title: "Flexibility at Your Fingertips" },
-                { icon: Users, title: "Boosted Collaboration" },
-                { icon: Smile, title: "Employee Satisfaction" },
-                { icon: Zap, title: "Technology-Driven Process" },
-                { icon: TrendingUp, title: "Improved Productivity" },
-                { icon: UserPlus, title: "Efficient Onboarding Process" },
-              ].map((item, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <item.icon className="h-6 w-6 mb-2" />
-                    <CardTitle>{item.title}</CardTitle>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </div>
+      <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg pt-36 bg-background ">
+        
+        <Marquee pauseOnHover className="[--duration:20s]">
+          {firstRow.map((review) => (
+            <ReviewCard key={review.username} {...review} />
+          ))}
+        </Marquee>
+        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
+          Partnerships
+        </h1>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
       </div>
-
+      <Separator />
       <CreatePost />
 
       {/* TEST FEEDBACKS */}

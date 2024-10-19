@@ -1,8 +1,7 @@
 import { useUserByProviders } from "@/hooks/useUserData";
+import { useState } from "react";
 import { DataTable } from "../tables/data-table";
 import { providersColumns } from "../tables/ProvidersColumnDef";
-import { useState } from "react";
-import { dummyUsers } from "../data/dummy-data";
 
 const ProvidersTable = () => {
   const [page, setPage] = useState(0);
@@ -12,9 +11,8 @@ const ProvidersTable = () => {
 
   // Assume this API returns both `data` and `total` (total number of rows)
   const { data, isLoading, isError } = useUserByProviders(skip, take);
-  const totalRows = data || 0
+  const totalRows = data || 0;
 
-  
   return (
     <>
       <DataTable

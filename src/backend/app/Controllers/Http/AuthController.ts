@@ -232,7 +232,7 @@ export default class AuthController {
       await VerificationCode.delete(verificationCode.id);
       await User.save(user);
 
-      const jsonData = await signToken({ id: user.id }, "7d");
+      const jsonData = await signToken({ id: user.id, role: user.role }, "7d");
 
       if (!jsonData.data) {
         return httpResponseError(
@@ -391,7 +391,7 @@ export default class AuthController {
 
       await VerificationCode.delete(verificationCode.id);
 
-      const jsonData = await signToken({ id: user.id }, "7d");
+      const jsonData = await signToken({ id: user.id, role: user.role }, "7d");
 
       if (!jsonData.data) {
         return httpResponseError(

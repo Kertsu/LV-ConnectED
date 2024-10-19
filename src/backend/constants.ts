@@ -5,10 +5,13 @@ export const UserRole = [
 ]
 
 export const PostCategoryType = [
-    'government supported',
-    'local government',
-    'school/university scholarship',
-    'corporate supported',
-    'standalone',
+    'scholarship',
     'internship'
+]
+
+export const UserTypes = [
+    'school',
+    'government',
+    'corporate',
+    'other',
 ]

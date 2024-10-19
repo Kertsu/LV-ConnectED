@@ -1,7 +1,6 @@
 // src/components/admin/AdminPostsTable.tsx
 
 import { DataTable } from "@/components/tables/data-table";
-import { dummyPosts } from "@/components/data/dummy-data";
 import { postsColumnDefs } from "../tables/PostsColumnDef";
 import { useState } from "react";
 import { useAllPost } from "@/hooks/usePostData";

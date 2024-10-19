@@ -1,3 +1,4 @@
+import { id } from "azle/src/lib/ic/id";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { EmailMessage, sendEmail } from "Helpers/mailer";
@@ -6,6 +7,16 @@ import { IsNull, Not } from "typeorm";
 
 // GET all users
 export default class UserController {
+  static async getSelf(request: Request, response: Response) {
+    const user = await User.findOneBy({ id: request.user });
+
+    if (!user) {
+      return httpResponseError(response, null, "Unauthorized!", 401);
+    }
+
+    httpResponseSuccess(response, { user }, null, 200);
+  }
+
   static async getAll(request: Request, response: Response) {
     try {
       const skip = request.skip;
@@ -69,6 +80,7 @@ export default class UserController {
       message: null,
     });
   }
+
 
   static async getProviders(request: Request, response: Response) {
     try {
@@ -171,7 +183,7 @@ export default class UserController {
         response,
         { students: data[0], count: data[1] },
         null,
-        500
+        200
       );
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error!", 500);
@@ -410,37 +422,6 @@ export default class UserController {
   }
 
   static async test(request: Request, response: Response) {
-    try {
-      const emailMessage: EmailMessage = {
-        body: {
-          name: "Kurtd Daniel Bigtas",
-          intro: "Test ulit gamit dfx deploy",
-          action: {
-            instructions: "To get started with Mailgen, please click here:",
-            button: {
-              color: "#22BC66",
-              text: "click kung baliw ka",
-              link: "https://mailgen.js/confirm?s=d9729feb74992cc3482b350163a1a010",
-            },
-          },
-          outro:
-            "Need help, or have questions? Just reply to this email, we'd love to help.",
-        },
-      };
-
-      const jsonData = await sendEmail(
-        emailMessage,
-        "johnraybendelarama@student.laverdad.edu.ph",
-        "TEST EMAIL FROM IC (1)"
-      );
-
-      return response.json(jsonData);
-    } catch (error) {
-      console.log("LN415", error);
-      response.status(500).json({
-        status: 0,
-        message: "Server error",
-      });
-    }
+    httpResponseSuccess(response, null, "testing")
   }
 }

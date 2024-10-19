@@ -7,10 +7,10 @@ export const getUserById = async (id: string) => {
 };
 
 //GET all user
-export const getAllUsers = async (skip: number, take: number) => {
+export const getAllUsers = async (page: number, take: number) => {
   const response = await axiosInstance.get(`/users`, {
     params: {
-      skip,
+      page,
       take,
     },
   });
@@ -18,21 +18,22 @@ export const getAllUsers = async (skip: number, take: number) => {
 };
 
 //ALL STUDENTS
-export const getAllStudents = async (skip: number, take: number) => {
+export const getAllStudents = async (page: number, take: number) => {
   const response = await axiosInstance.get("/students", {
     params: {
-      skip,
+      page,
       take,
     },
   });
+  console.log("User Service",response.data); // Add this line to log the response data
   return response.data;
 };
 
 //ALL PROVIDERS
-export const getAllProviders = async (skip: number, take: number) => {
+export const getAllProviders = async (page: number, take: number) => {
   const response = await axiosInstance.get("/providers", {
     params: {
-      skip,
+      page,
       take,
     },
   });

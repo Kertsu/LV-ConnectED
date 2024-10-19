@@ -1,7 +1,7 @@
 // src/api/axiosConfig.ts
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/icp'; // Environment variable
+export const API_URL = import.meta.env.VITE_API_URL || 'http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:4943/icp'; // Environment variable
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

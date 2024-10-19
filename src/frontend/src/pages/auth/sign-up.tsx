@@ -1,55 +1,96 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useNavigate } from "react-router-dom" // Import useNavigate
+import { registerUser } from "@/api/authService";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import * as z from "zod";
 
 // Define the sign-up schema without password
-const signUpSchema = z.object({
-  email: z.string().email(),
-  role: z.enum(["provider", "student"]),
-}).refine((data) => !!data.email, {
-  message: "Email is required",
-  path: ["email"],
-})
+const signUpSchema = z
+  .object({
+    name: z.string(),
+    email: z.string().email(),
+    role: z.enum(["provider", "student"]),
+  })
+  .refine((data) => !!data.email, {
+    message: "Email is required",
+    path: ["email"],
+  });
 
 export default function SignUp() {
-  const [isLoading, setIsLoading] = useState(false)
-  const navigate = useNavigate() // Initialize useNavigate
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const signUpForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
+      name: "",
       email: "",
       role: "student",
     },
-  })
+  });
 
   const onSignUp = async (values: z.infer<typeof signUpSchema>) => {
-    setIsLoading(true)
-    console.log("Sign up", values) // Debugging output
+    setIsLoading(true);
+    console.log("Sign up", values); // Debugging output
 
     // Simulate successful sign-up (replace this with your actual logic)
     try {
       // TODO: Implement your actual sign-up logic here
       // Temporarily navigate to OTP verification page
-      navigate('/otp-verification') // Ensure this route is correctly set up
+      const response = await registerUser(values);
+
+      console.log("Sign up response: ", response);
+
+      navigate("/otp-verification", {
+        state: {
+          otp: response.data.token,
+          email: response.data.user.email,
+          origin: 'register'
+        },
+      }); // Ensure this route is correctly set up
     } catch (error) {
-      console.error("Sign-up error:", error) // Log any error
+      console.error("Sign-up error:", error); // Log any error
     }
 
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   return (
     <Form {...signUpForm}>
       <form onSubmit={signUpForm.handleSubmit(onSignUp)} className="space-y-4">
+        <FormField
+          control={signUpForm.control}
+          name="name"
+          render={({ field }: any) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={signUpForm.control}
           name="email"
@@ -63,7 +104,7 @@ export default function SignUp() {
             </FormItem>
           )}
         />
-       
+
         <FormField
           control={signUpForm.control}
           name="role"
@@ -90,5 +131,5 @@ export default function SignUp() {
         </Button>
       </form>
     </Form>
-  )
+  );
 }

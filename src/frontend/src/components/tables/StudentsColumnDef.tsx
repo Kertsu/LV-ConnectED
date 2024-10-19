@@ -1,5 +1,8 @@
 import { User } from "@/types/model";
 import { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,13 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { Checkbox } from "../ui/checkbox";
-import { useArchiveUser } from "@/hooks/useUserData";
-
 
 export const studentsColumns: ColumnDef<User>[] = [
   {

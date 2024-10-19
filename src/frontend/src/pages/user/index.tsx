@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Header from "@/components/header/user-header/Header";
 import UpperContent from "@/components/user/UpperContent";
 import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
-import { dummyPosts, dummyTopProviders } from "../../components/data/dummy-data";
 import TopProviderCard from "@/components/provider-component/top-providers/TopProviderCard";
 import RightCardSide from "@/components/user/RightCardSide";
 import { ArrowUp } from "lucide-react";
 import LeftCardSide from "@/components/user/LeftCardSide";
 import PostForm from "@/components/post/FormPost";
+import { Post, User as UserModel } from "@/types/model";
 
 const User: React.FC = () => {
   // State to track visibility of the "Go to Top" button
@@ -40,9 +40,12 @@ const User: React.FC = () => {
     });
   };
 
+  const posts: Post[] = [];
+  const providers: UserModel[] = [];
+
   return (
     <>
-      <Header/>
+      <Header />
       <div className="flex flex-row w-full container mx-auto px-4">
         <div className="hidden lg:block ">
           <LeftCardSide />
@@ -55,26 +58,11 @@ const User: React.FC = () => {
           <div className="container mx-auto px-4">
             <PostForm />
           </div>
-          
 
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 justify-center items-center ">
-              {dummyPosts.map((post) => (
-                <PostSummaryCard
-                  key={post.email}
-                  postAuthorEmail={post.email}
-                  postAuthorName={post.name}
-                  postAuthorAvatarSource={post.avatarUrl}
-                  postTitle={post.postTitle}
-                  postThumbnailSource={post.postThumbnailSource}
-                  postDescription={post.postDescription}
-                  postRatingCount={post.postRatingCount}
-                  postBookmarkCount={post.postBookmarkCount}
-                  postCommentCount={post.postCommentCount}
-                  postType={""}
-                  postDate={""}
-                  postId={post.id}
-                />
+              {posts.map((post: Post) => (
+                <PostSummaryCard post={post} />
               ))}
             </div>
           </div>
@@ -82,16 +70,8 @@ const User: React.FC = () => {
           <div className="container mx-auto px-4 py-10">
             <h1 className="text-2xl font-bold ">Top Providers</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2  gap-4 justify-center items-center pt-10 ">
-              {dummyTopProviders.map((provider, index) => (
-                <TopProviderCard
-                  key={index}
-                  thumbnail={provider.thumbnail}
-                  avatar={provider.avatar}
-                  provider={provider.provider}
-                  description={provider.description}
-                  scholarship={provider.scholarship}
-                  id={""}
-                />
+              {providers.map((provider, index) => (
+                <TopProviderCard provider={provider} />
               ))}
             </div>
           </div>
@@ -101,16 +81,12 @@ const User: React.FC = () => {
           <RightCardSide />
         </div>
       </div>
-   {/* Up arrow button */}
-   {showScrollToTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 p-3 "
-        >
+      {/* Up arrow button */}
+      {showScrollToTop && (
+        <button onClick={scrollToTop} className="fixed bottom-8 right-8 p-3 ">
           <ArrowUp className="h-6 w-6" />
         </button>
       )}
-   
     </>
   );
 };

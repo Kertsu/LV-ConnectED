@@ -17,7 +17,7 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 
   return (
     <>
-      <RainbowButton onClick={handleSignIn}>Sign In</RainbowButton>
+      <RainbowButton onClick={handleSignIn}>Get Started</RainbowButton>
     </>
   );
 };

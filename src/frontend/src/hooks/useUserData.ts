@@ -20,35 +20,35 @@ export const useUserById = (id: string) => {
 };
 
 // get ALL users
-export const useAllUser = (skip: number, take: number) => {
+export const useAllUser = (page: number, take: number) => {
   return useQuery({
-    queryKey: ["users", skip, take],
-    queryFn: () => getAllUsers(skip, take),
+    queryKey: ["users", page, take],
+    queryFn: () => getAllUsers(page, take),
     staleTime: 10000,
     refetchOnWindowFocus: false,
-    enabled: skip >= 0 && take > 0,
+    enabled: page >= 0 && take > 0,
   });
 };
 
 // get ALL STUDENTS
-export const useUserByStudents = (skip: number, take: number) => {
+export const useUserByStudents = (page: number, take: number) => {
   return useQuery({
-    queryKey: ["students", skip, take],
-    queryFn: () => getAllStudents(skip, take),
+    queryKey: ["students", page, take],
+    queryFn: () => getAllStudents(page, take),
     staleTime: 10000,
     refetchOnWindowFocus: false,
-    enabled: skip >= 0 && take > 0,
-    select: (data) => ({ data: data.students, count: data.count }), // Return both data and count
+    enabled: page >= 0 && take > 0,
+    select: (data) => ({ students: data.students, count: data.count }), // Return both data and count
   });
 };
 //Providers
-export const useUserByProviders = (skip: number, take: number) => {
+export const useUserByProviders = (page: number, take: number) => {
   return useQuery({
-    queryKey: ["providers", skip, take],
-    queryFn: () => getAllProviders(skip, take),
+    queryKey: ["providers", page, take],
+    queryFn: () => getAllProviders(page, take),
     staleTime: 10000,
     refetchOnWindowFocus: false,
-    enabled: skip >= 0 && take > 0,
+    enabled: page >= 0 && take > 0,
   });
 };
 

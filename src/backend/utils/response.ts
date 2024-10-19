@@ -8,7 +8,7 @@ export const httpResponseSuccess = (
 ) => {
   return response.status(code).json({
     success: true,
-    data,
+    ...data,
     message,
   });
 };
@@ -21,7 +21,7 @@ export const httpResponseError = (
 ) => {
   return response.status(code).json({
     success: false,
-    data,
+    ...data,
     message,
   });
 };

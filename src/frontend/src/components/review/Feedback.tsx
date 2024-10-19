@@ -48,13 +48,13 @@ const Feedback: React.FC<FeedbackProps> = (FeedbackProps) => {
                 </div>
                 <div className="flex gap-2.5 items-center">
                   <p className="text-xs text-gray-500 flex gap-[.25rem]">
-                    {Array.from(Array(feedback.rating)).map((_) => (
+                    {Array.from(Array(feedback.rate)).map((_) => (
                       <Star className="fill-blue-500 text-blue-500 w-4"></Star>
                     ))}
                   </p>
-                  <h3 className="font-bold ">{feedback.rating}.0</h3>
+                  <h3 className="font-bold ">{feedback.rate}.0</h3>
                 </div>
-                <p className="text-sm mt-2 line-clamp-4">{feedback.comment}</p>
+                <p className="text-sm mt-2 line-clamp-4">{feedback.content}</p>
               </div>
             </div>
           </div>
