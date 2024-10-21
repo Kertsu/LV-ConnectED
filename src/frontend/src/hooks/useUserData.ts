@@ -48,10 +48,10 @@ export const useUserByStudents = (page: number, take: number) => {
   });
 };
 //Providers
-export const useUserByProviders = (page: number, take: number) => {
+export const useUserByProviders = (page: number, take: number, sortOrder:string = "ASC") => {
   return useQuery({
     queryKey: ["providers", page, take],
-    queryFn: () => getAllProviders(page, take),
+    queryFn: () => getAllProviders(page, take, sortOrder),
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: page >= 0 && take > 0,

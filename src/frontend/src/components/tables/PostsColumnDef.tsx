@@ -41,6 +41,13 @@ import { toast } from "@/hooks/use-toast";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 export const postsColumnDefs = (isLoading: boolean): ColumnDef<Post>[] => [
   {
@@ -64,13 +71,42 @@ export const postsColumnDefs = (isLoading: boolean): ColumnDef<Post>[] => [
     ),
   },
   {
+    accessorKey: "id",
+    header: "Author",
+    cell: ({ row }) => {
+      const user = row.original.user;
+
+      return (
+        <div className="flex flex-row items-center gap-2 sm:gap-3 max-w-64">
+          <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
+            <AvatarImage src={user.avatarUrl} />
+            <AvatarFallback>P</AvatarFallback>
+          </Avatar>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="truncate max-w-[200px] text-sm sm:text-base text-start ">
+                <p className="text-sm">{user.name}</p>
+                <p className="text-muted-foreground text-xs">{user.email}</p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{user.name}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "title",
     header: "Post Title",
     cell: ({ row }) => (
-      <p
-        dangerouslySetInnerHTML={{ __html: row.original.title }}
-        className="truncate "
-      ></p>
+      <>
+        <p
+          dangerouslySetInnerHTML={{ __html: row.original.title }}
+          className="truncate "
+        />
+      </>
     ),
   },
   {

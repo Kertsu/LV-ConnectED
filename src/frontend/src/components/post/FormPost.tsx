@@ -34,52 +34,52 @@ export default function PostForm() {
             <CardTitle className="text-3xl font-bold text-primary">
               Welcome, {userName}
             </CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">Provider</p>
+            <p className="text-sm text-muted-foreground mt-1">{data?.role}</p>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="space-y-6">
-          {data?.providerVerifiedAt === null ? (
-            <>
-              <p className="text-muted-foreground">
-                <Link to={`/profile`} className="underline text-blue-500">
-                  Verify
-                </Link> your account. To start create posts and connect with students
-                and share your expertise.
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="text-muted-foreground">
-                Create and manage your posts to connect with students and share
-                your expertise.
-              </p>
-              <div className="bg-secondary p-6 rounded-lg">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-secondary-foreground">
-                    Create a New Post
-                  </h2>
-                  <CreatePost>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-2"
-                    >
-                      <PlusCircle className="w-4 h-4" />
-                      New Post
-                    </Button>
-                  </CreatePost>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Click the button above to create a new post. You can add a
-                  title, select a scholarship type, upload a thumbnail, and
-                  write your content.
-                </p>
+      {data?.role !== 'admin' && (<div className="space-y-6">
+        {data?.providerVerifiedAt === null ? (
+          <>
+            <p className="text-muted-foreground">
+              <Link to={`/profile`} className="underline text-blue-500">
+                Verify
+              </Link> your account. To start create posts and connect with students
+              and share your expertise.
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="text-muted-foreground">
+              Create and manage your posts to connect with students and share
+              your expertise.
+            </p>
+            <div className="bg-secondary p-6 rounded-lg">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-secondary-foreground">
+                  Create a New Post
+                </h2>
+                <CreatePost>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2"
+                  >
+                    <PlusCircle className="w-4 h-4" />
+                    New Post
+                  </Button>
+                </CreatePost>
               </div>
-            </>
-          )}
-        </div>
+              <p className="text-sm text-muted-foreground">
+                Click the button above to create a new post. You can add a
+                title, select a scholarship type, upload a thumbnail, and
+                write your content.
+              </p>
+            </div>
+          </>
+        )}
+      </div>)}
       </CardContent>
     </Card>
   );

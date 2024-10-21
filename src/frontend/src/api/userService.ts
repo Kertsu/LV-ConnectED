@@ -30,11 +30,13 @@ export const getAllStudents = async (page: number, take: number) => {
 };
 
 //ALL PROVIDERS
-export const getAllProviders = async (page: number, take: number) => {
-  const response = await axiosInstance.get("/providers", {
+export const getAllProviders = async (page: number, take: number, sortOrder:string) => {
+  const response = await axiosInstance.post("/admin/providers",{}, {
     params: {
       page,
       take,
+      sortOrder,
+      verified: "true", 
     },
   });
   return response.data;
