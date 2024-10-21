@@ -51,21 +51,21 @@ const UnverifiedProvidersTable = () => {
   );
 };
 const ArchivedUsers = () => {
-  const [page, setPage] = useState(0);
+  const [pages, setPage] = useState(0);
 
   const take = 10; 
-  const skip = page * take;
+  const page = pages * take;
 
-  const { data, isLoading } = useArchivedUsers(skip, take);
-  console.log("Archived:", data); 
+  const { data, isLoading } = useArchivedUsers(page, take);
+  console.log("ln:60 Archived:", data); 
   const totalRows = data?.count || 0;
 
   return (
     <>
       <DataTable
         columns={providersColumns}
-        data={data?.archivedUsers || []}
-        page={page}
+        data={data?.users || []}
+        page={pages}
         pageSize={take}
         totalRows={totalRows}
         onPageChange={setPage}

@@ -11,7 +11,8 @@ import {
   getUnVerifiedProviders,
   verifyProviderById,
   unArchiveUserById,
-  getArchiveUsers
+  getArchiveUsers,
+  uploadValidId
 } from "@/api/userService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -136,6 +137,14 @@ export const useArchivedUsers = (page: number, take: number, sortOrder: string =
     staleTime: 10000,
     refetchOnWindowFocus: false,
     enabled: page >= 0 && take > 0,
-    select: (data) => ({ archivedUsers: data.archivedUsers, count: data.count }), // Return both data and count
+    // select: (data) => ({ archivedUsers: data.archivedUsers, count: data.count }), // Return both data and count
+  });
+};
+
+
+// Upload Valid Id
+export const useUploadValidId = () => {
+  return useMutation({
+    mutationFn: (validIdUrl: string) => uploadValidId(validIdUrl),
   });
 };

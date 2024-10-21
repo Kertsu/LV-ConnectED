@@ -52,7 +52,7 @@ import { Link, useNavigate } from "react-router-dom";
 const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
   const navigate = useNavigate();
 
-  const { id, user, type, createdAt, thumbnail, title, content, feedbacks, bookmarks } =
+  const { id, user, type, createdAt, thumbnail, title, content, feedbacks, bookmarks, isBookmarked } =
     post;
 
   // comment count is just the number of feedbacks that have a content
@@ -102,15 +102,15 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
       setIsTouchDevice(true);
     }
 
-    isBookmarked(String(id))
-      .then((result) => {
-        setBookmarked(result?.bookmarked!);
-      })
-      .catch((error) => {
-        toast({
-          description: error.message,
-        });
-      });
+    // isBookmarked(String(id))
+    //   .then((result) => {
+    //     setBookmarked(result?.bookmarked!);
+    //   })
+    //   .catch((error) => {
+    //     toast({
+    //       description: error.message,
+    //     });
+    //   });
   }, []);
 
   const handleRating = async () => {

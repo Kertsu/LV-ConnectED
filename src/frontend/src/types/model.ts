@@ -38,6 +38,7 @@ export interface Post {
   user: User;
   feedbacks: Feedback[];
   bookmarks: Bookmark[];
+  isBookmarked? : boolean
 }
 
 export interface Bookmark {

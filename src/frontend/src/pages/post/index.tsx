@@ -50,15 +50,15 @@ export default function PostPage() {
     fetchPost();
   }, [postId]);
 
-  useEffect(() => {
-    isBookmarked(String(postId))
-      .then((result) => {
-        setBookmarked(result?.bookmarked);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, []);
+  // useEffect(() => {
+  //   isBookmarked(String(postId))
+  //     .then((result) => {
+  //       setBookmarked(result?.bookmarked);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // }, []);
 
   const handleBack = () => {
     navigate(-1);

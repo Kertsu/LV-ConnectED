@@ -1,3 +1,5 @@
+
+//Components
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,13 +18,32 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { ImageUp, Plus } from "lucide-react";
+
+//Icons
+import { ImageUp, LoaderCircle, Plus } from "lucide-react";
+
+//Hooks
+import React from "react";
+import { useUploadValidId } from "@/hooks/useUserData";
 import { useState, useEffect, ChangeEvent, DragEvent } from "react";
+import { useAuth } from "@/hooks/use-auth";
 
 const UploadValidId = () => {
+  const [error, setError] = useState<string | null>(null); // Add this line
   const [image, setImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const { mutate: uploadValidId, isPending, isSuccess } = useUploadValidId(); // Add this line
+
+  const auth = useAuth();
+  const userData = auth?.data;
+
+  const cloud_name = "dst8xk1fa"; // change this to your cloud name
+  const upload_preset = "pwdckr9c";
+
+  const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
 
   useEffect(() => {
     return () => {
@@ -50,27 +71,84 @@ const UploadValidId = () => {
     }
   }
 
-  function uploadImageHandler() {
-    console.log(imageURL);
+  async function uploadImage() {
+    console.log("ln:61 UploadValidId.tsx - UploadImage called"); // Add this line for debugging
+    if (!image) return ""; // Return empty if no image is selected
+
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", upload_preset);
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`Upload failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.secure_url; // Return the uploaded image URL
+    } catch (error) {
+      console.error("Upload error", error);
+      return ""; // Return empty string on error
+    }
+  }
+
+  async function uploadImageHandler() {
+    console.log("ln:83 UploadValidId.tsx - UploadImageHandler called");
+    if (image) {
+      try {
+        const imageURL = await uploadImage(); // Upload image and get URL
+        uploadValidId(imageURL, {
+          onSuccess: () => {
+            setOpen(false);
+            toast({
+              title: "Success",
+              description: "Valid ID Uploaded",
+              variant: "default",
+            });
+          },
+          onError: () => {
+            toast({
+              title: "Error",
+              description: "Failed to upload Valid ID",
+              variant: "destructive",
+            });
+          },
+        });
+        setError(null);
+      } catch (error) {
+        console.error("Error uploading image:", error); // Log for debugging
+        setError("Failed to upload the image. Please try again.");
+      }
+    } else {
+      setError("Please select an image before uploading.");
+    }
   }
 
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader>
         <CardTitle className="text-lg">Complete your Verification</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         Please provide nformation to verify your account. <br />
-        Your organization does not have permission to create posts if not verified.
+        Your organization does not have permission to create posts if not
+        verified.
       </CardContent>
       <CardFooter>
         <Dialog
-          onOpenChange={() => {
-            if (imageURL) {
-              setImageURL(null);
-              setImage(null);
-              URL.revokeObjectURL(imageURL);
+          open={open}
+          onOpenChange={(isOpen) => {
+            // Reset Image
+            if (!isOpen && imageURL) { 
+              setImageURL(null);       
+              setImage(null);          
+              URL.revokeObjectURL(imageURL); 
             }
+            setOpen(isOpen); 
           }}
         >
           <DialogTrigger>
@@ -114,9 +192,10 @@ const UploadValidId = () => {
                       />
                     </div>
                   ) : (
-                    <div className="flex flex-col justify-center items-center gap-4 text-slate-500">
+                    <div className="flex flex-col justify-center items-center gap-4 text-slate-500 text-center">
                       <ImageUp className="h-16 w-16" />
-                      Upload Valid Id Image <br /> Accepted .png .jpeg .jpg
+                      Drag or Select Image <br /> Accepted .png .jpeg .jpg
+                      {error && <p className="text-red-500 text-sm">{error}</p>}
                     </div>
                   )}
                 </Label>
@@ -124,12 +203,21 @@ const UploadValidId = () => {
 
               <div className="flex justify-end gap-2 items-center ">
                 <Button
-                  variant={"info"}
                   size={"lg"}
                   onClick={uploadImageHandler}
                   className="flex gap-1 items-center "
+                  disabled={isPending}
                 >
-                  <Plus /> Upload
+                  {isPending ? (
+                    <>
+                      <LoaderCircle className="animate-spin h-5 w-5 text-gray-600 " />{" "}
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Plus /> Upload
+                    </>
+                  )}
                 </Button>
               </div>
             </div>

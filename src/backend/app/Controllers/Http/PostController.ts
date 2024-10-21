@@ -10,7 +10,7 @@ export default class PostController {
       const skip = request.skip;
       const take = request.limit;
 
-      const { sortOrder = "ASC", type} = request.query;
+      const { sortOrder = "ASC", type } = request.query;
 
       const whereConditions: any = {
         archivedAt: IsNull(),
@@ -36,7 +36,9 @@ export default class PostController {
         },
       });
 
-      httpResponseSuccess(response, { posts: data[0], count: data[1] });
+      const formattedPosts = data[0].map((post) => ({...post, isBookmarked: post.bookmarks.some((bookmark) => bookmark.user.id === request.user)}));
+
+      httpResponseSuccess(response, { posts: formattedPosts, count: data[1] });
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error", 500);
     }
@@ -146,9 +148,9 @@ export default class PostController {
 
       const updatedPost = await Post.findOne({
         where: {
-          id: post.id
+          id: post.id,
         },
-        relations: ["user"]
+        relations: ["user"],
       });
 
       httpResponseSuccess(

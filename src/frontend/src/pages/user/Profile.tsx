@@ -5,7 +5,13 @@ import UploadValidId from "@/components/provider-component/UploadValidId";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/use-auth";
@@ -56,6 +62,7 @@ export default function ProfilePage() {
   });
 
   const auth = useAuth();
+  const userData = auth?.data;
 
   const handleEditProfile = (updatedUser: User) => {
     setUser(updatedUser);
@@ -147,17 +154,54 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            {user.information.role === "Student" && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Valid ID</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <UploadValidId />
-                  </CardContent>
-                </Card>
-              )}
-
+            {userData?.role === "provider" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Account Status</CardTitle>
+                  <Badge
+                    variant={
+                      userData?.archivedAt
+                        ? "blue"
+                        : userData?.providerVerifiedAt === null &&
+                          userData?.validIdUrl === null
+                        ? "destructive"
+                        : userData?.providerVerifiedAt === null
+                        ? "yellow"
+                        : "green"
+                    }
+                    className="w-fit"
+                  >
+                    {userData?.archivedAt
+                      ? "Archived"
+                      : userData?.providerVerifiedAt === null &&
+                        userData?.validIdUrl === null
+                      ? "Not Verified"
+                      : userData?.providerVerifiedAt === null
+                      ? "Pending Verification"
+                      : "Verified"}
+                  </Badge>
+                </CardHeader>
+                <CardContent>
+                    {userData?.archivedAt ? (
+                      <p>Your account is archived.</p>
+                    ) : userData?.providerVerifiedAt === null &&
+                      userData?.validIdUrl === null ? (
+                      <>
+                        <UploadValidId />
+                      </>
+                    ) : userData?.providerVerifiedAt === null ? (
+                      <p>
+                        Your valid ID has been uploaded. Verification is
+                        pending.
+                      </p>
+                    ) : (
+                      <p>
+                        Your account is verified. You can now post scholarships.
+                      </p>
+                    )}
+                </CardContent>
+              </Card>
+            )}
 
             <Tabs defaultValue="posts" className="w-full">
               <TabsList className="w-full justify-start mb-6">

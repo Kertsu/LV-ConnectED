@@ -5,7 +5,6 @@ import { ConsoleLogger } from "./database/logger";
 import { Seeder } from "./database/seeders/seeder";
 import { DatabaseStorage } from "./database/storage";
 import { CreateServer } from "./server";
-import { getCanisterLink } from "Helpers/helpers";
 
 const databaseOptions: DatabaseOptions = {
   synchronize: false,

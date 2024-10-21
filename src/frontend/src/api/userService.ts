@@ -60,10 +60,10 @@ export const getArchiveUsers = async (page: number, take: number, sortOrder: str
       page,
       take,
       sortOrder,
-      verified: "true", 
       archived: "true",
     },
   });
+  console.log("ln:67 User Service", response.data); // Add this line to log the response data
   return response.data;
 };
 
@@ -130,4 +130,10 @@ export const verifyProviderById = async (id: string) => {
   return response.data;
 };
 
-// reject provider
+//Upload Valid ID
+export const uploadValidId = async ( validIdUrl: string) => {
+  const response = await axiosInstance.post("/@self/upload/valid-id", {
+    validIdUrl,
+  });
+  return response.data;
+};
