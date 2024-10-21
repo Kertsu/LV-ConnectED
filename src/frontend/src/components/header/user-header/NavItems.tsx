@@ -1,5 +1,3 @@
-// src/components/header/NavItems.tsx
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -27,7 +25,8 @@ const NavItems: React.FC<NavItemsProps> = ({ closeMobileMenu }) => {
           <Button
             variant="ghost"
             asChild
-            className="w-full justify-start  hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500"
+            className={`w-full justify-start hover:bg-transparent hover:text-blue-500 transition-colors duration-200 dark:hover:text-yellow-500 
+              ${location.pathname === item.path ? 'text-blue-500 font-bold dark:text-yellow-500' : ''}`}
           >
             <a
               onClick={() => {
@@ -38,7 +37,8 @@ const NavItems: React.FC<NavItemsProps> = ({ closeMobileMenu }) => {
                   navigate(item.path);
                 }
               }}
-              className="hover:underline hover:text-blue-500 dark:hover:text-yellow-500 transition-colors duration-200 cursor-pointer"
+              className={`hover:underline transition-colors duration-200 cursor-pointer 
+                ${location.pathname === item.path ? 'underline' : ''}`} // Add underline for active link
             >
               {item.name}
             </a>
