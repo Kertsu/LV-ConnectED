@@ -1,8 +1,4 @@
-import {
-  createBookmark,
-  deleteBookmark,
-  isBookmarked,
-} from "@/api/bookmarkService";
+import { createBookmark, deleteBookmark } from "@/api/bookmarkService";
 import { createFeedback } from "@/api/feedbackService";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -35,7 +31,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { toast } from "@/hooks/use-toast";
+// import { toast } from "@/hooks/use-toast";
 import { Post } from "@/types/model";
 import {
   Bookmark,
@@ -48,12 +44,23 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
   const navigate = useNavigate();
 
-  const { id, user, type, createdAt, thumbnail, title, content, feedbacks, bookmarks, isBookmarked } =
-    post;
+  const {
+    id,
+    user,
+    type,
+    createdAt,
+    thumbnail,
+    title,
+    content,
+    feedbacks,
+    bookmarks,
+    isBookmarked,
+  } = post;
 
   // comment count is just the number of feedbacks that have a content
   const commentCount = feedbacks.filter((feedback) => feedback.content).length;
@@ -111,6 +118,8 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
     //       description: error.message,
     //     });
     //   });
+
+    setBookmarked(isBookmarked!);
   }, []);
 
   const handleRating = async () => {
@@ -127,39 +136,33 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
       );
 
       if (result.success) {
-        toast({
-          description: "Feedback Submitted!",
-        });
+        toast.success("Feedback Submitted!");
       }
     } catch (error: any) {
-      toast({
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     }
-    toast({
-      title: "Rating Submitted",
-      description: "Thank you for your feedback!",
-    });
   };
 
   const handleBookmark = async () => {
     // Here you would typically toggle the bookmark status in your backend
     try {
       if (!bookmarked) {
-        await createBookmark(String(id));
         setBookmarked(true);
-        toast({
-          description: "Saved to Bookmark",
-        });
+        toast.success("Saved to Bookmark");
+        await createBookmark(String(post.id));
       } else {
-        await deleteBookmark(String(id));
         setBookmarked(false);
+        toast.success("Removed from Bookmark");
+        await deleteBookmark(String(post.id));
       }
     } catch (error: any) {
-      toast({
-        description: error.message,
-      });
+      // cancel optimistic update
+      if (!bookmarked) {
+        setBookmarked(false);
+      } else {
+        setBookmarked(true);
+      }
+      toast.error(error.message);
     }
   };
 
@@ -167,10 +170,7 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
     if (type === "copy") {
       navigator.clipboard.writeText(`https://yourwebsite.com/posts/${id}`);
 
-      toast({
-        title: "Link Copied",
-        description: "Post link has been copied to clipboard.",
-      });
+      toast.info("Copied to clipboard.");
     } else if (type === "facebook") {
       // Here you would typically open a Facebook share dialog
       console.log(`Sharing post ${id} on Facebook`);
@@ -178,7 +178,7 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
   };
 
   return (
-    <Card className="bg-primary-foreground">
+    <Card className="">
       <CardHeader className="py-4">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 items-center">

@@ -60,10 +60,10 @@ Route.post("/bookmarks/remove", AuthMiddleware.authorize, BookmarkController.del
 Route.post("/bookmarks/check", AuthMiddleware.authorize, BookmarkController.isBookmarked); // by post id
 
 Route.post("/posts/create", AuthMiddleware.authorize, PostController.create); // tested
-Route.post("/posts/:id", AuthMiddleware.authorize, PostController.updateById); // tested
+Route.post("/posts/:/update", AuthMiddleware.authorize, PostController.updateById); // tested
 Route.post("/posts/:id/remove", AuthMiddleware.authorize, PostController.deleteById); // tested
 Route.post("/posts", Pagination.paginate, AuthMiddleware.authorize, PostController.getPosts); // tested
-Route.get("/posts/:id", AuthMiddleware.authorize, PostController.findPostById); // tested
+Route.post("/posts/:id", AuthMiddleware.authorize, PostController.findPostById); // tested
 Route.post("/posts/:id/feedbacks", AuthMiddleware.authorize, Pagination.paginate, FeedbackController.getPostFeedbacks ); // tested
 
 Route.post("/feedbacks", AuthMiddleware.authorize, FeedbackController.createFeedback); // tested

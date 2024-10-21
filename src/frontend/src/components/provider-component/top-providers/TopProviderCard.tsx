@@ -40,7 +40,7 @@ const TopProviderCard: React.FC<TopProviderCardProps> = ({ provider }) => {
           <AvatarFallback className="text-2xl font-bold">{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="space-y-4 min-h-[120px]">
-          <h3 className="font-semibold text-lg line-clamp-1">{name}</h3>
+          <h3 className="font-semibold text-lg line-clamp-1 text-black dark:text-white">{name}</h3>
           {bio && (
             <p className="text-sm text-muted-foreground line-clamp-3">
               {bio}

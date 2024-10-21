@@ -9,8 +9,8 @@ import { IsNull } from "typeorm";
 import { User } from "../../../database/entities/user";
 import { VerificationCode } from "../../../database/entities/verification-code";
 import {
-  httpResponseError,
-  httpResponseSuccess,
+    httpResponseError,
+    httpResponseSuccess,
 } from "../../../utils/response";
 
 export default class AuthController {

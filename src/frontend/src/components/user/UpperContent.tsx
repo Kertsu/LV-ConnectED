@@ -1,40 +1,97 @@
-// src/components/student/UpperContent.tsx
-import React, { useState } from 'react';
-import { Search } from 'lucide-react'; // Importing the search icon from lucide-react
-
+import React, { useState, useEffect } from 'react';
+import { Search } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from '@/hooks/use-auth';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const UpperContent: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { data, isAuthenticated } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (data) {
+      setIsLoading(false);
+    }
+  }, [data]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
+  const handleSearch = () => {
+    console.log('Searching for:', searchQuery);
+  };
+
+  if (isLoading) {
+    return <UpperContentSkeleton />;
+  }
+
   return (
-    <div className="flex justify-center py-10  rounded-lg ">
-      <div className='flex flex-col items-center text-center max-w-2xl  '>
-        <h1 className='text-3xl font-bold mb-4 text-slate-900 dark:text-slate-100'>
-          Welcome students, here are the opportunities for you to have a quality education
-        </h1>
-        <p className='text-lg text-slate-600 dark:text-slate-300 mb-6'>
-          Quality Education • Support • Find a job
-        </p>
-        
-        {/* Search Bar */}
-        <div className="relative w-full max-w-md">
-          <input 
-            type="text"
-            className="w-full px-5 py-3 pl-12 border border-transparent shadow-lg rounded-full text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-400 dark:focus:ring-slate-500 transition-all"
-            placeholder="Search for opportunities..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-          {/* Search Icon from Lucide */}
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-slate-500 dark:text-slate-400" />
+    <Card className="w-full  mx-auto mt-10  ">
+      <CardContent className="p-8">
+        <div className="mb-8 text-center ">
+          <h2 className="text-2xl font-bold text-primary mb-2">
+            Welcome, {data?.name?.split(' ')[0]}!
+          </h2>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+            Discover tailored scholarships, internships, and OJT opportunities. 
+            Your journey to success begins here.
+          </p>
         </div>
-      </div>
-    </div>
+        <div className="flex items-center space-x-4 ">
+          <Avatar className="h-10 w-10 border- border-primary">
+            {data?.avatarUrl ? (
+              <AvatarImage src={data.avatarUrl} alt={data.name || 'User Avatar'} />
+            ) : (
+              <AvatarFallback className="bg-primary-foreground text-primary font-semibold">
+                {data?.name ? data.name.charAt(0) : 'U'}
+              </AvatarFallback>
+            )}
+          </Avatar>
+          <div className="flex-grow relative ">
+            <Input
+              type="text"
+              placeholder="Search for opportunities..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full bg-primary-foreground dark:bg-slate-800 pr-10 focus-visible:ring-primary rounded-lg"
+            />
+            <Button 
+              onClick={handleSearch} 
+              size="icon" 
+              variant="ghost" 
+              className="absolute right-0 top-0 bottom-0"
+            >
+              <Search className="h-5 w-5 text-muted-foreground" />
+              <span className="sr-only">Search</span>
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
+
+function UpperContentSkeleton() {
+  return (
+    <Card className="w-full max-w-4xl mx-auto mt-8 bg-background/80 backdrop-blur-sm shadow-lg">
+      <CardContent className="p-8">
+        <div className="mb-8 text-center">
+          <Skeleton className="h-8 w-64 mx-auto mb-2" />
+          <Skeleton className="h-4 w-full max-w-2xl mx-auto" />
+          <Skeleton className="h-4 w-3/4 max-w-2xl mx-auto mt-1" />
+        </div>
+        <div className="flex items-center space-x-4">
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <Skeleton className="h-10 flex-grow" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default UpperContent;
