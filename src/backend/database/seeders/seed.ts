@@ -31,7 +31,7 @@ export const legitCreds: UserInterface[] = [
     email: "kurtddbigtas@gmail.com",
     emailVerifiedAt: "2024-09-15T12:00:00Z",
     providerVerifiedAt: null,
-    role: "student",
+    role: "admin",
     type: null,
     createdAt: "2024-02-15T12:00:00Z",
     updatedAt: "2024-09-15T12:00:00Z",

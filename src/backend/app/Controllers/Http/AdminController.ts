@@ -202,6 +202,15 @@ export default class AdminController {
         order: {
           id: sortOrder === "DESC" ? "DESC" : "ASC",
         },
+        select: {
+          id: true,
+          name: true,
+          avatarUrl: true,
+          email: true,
+          createdAt: true,
+          validIdUrl: true,
+          providerVerifiedAt: true,
+        },
       });
 
       httpResponseSuccess(
@@ -236,6 +245,15 @@ export default class AdminController {
         take,
         order: {
           id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+        select: {
+          id: true,
+          name: true,
+          avatarUrl: true,
+          email: true,
+          createdAt: true,
+          validIdUrl: true,
+          providerVerifiedAt: true,
         },
       });
 
@@ -274,6 +292,13 @@ export default class AdminController {
         order: {
           id: sortOrder === "DESC" ? "DESC" : "ASC",
         },
+        select: {
+          id: true,
+          name: true,
+          avatarUrl: true,
+          email: true,
+          createdAt: true,
+        },
       });
 
       httpResponseSuccess(
@@ -306,15 +331,26 @@ export default class AdminController {
         where: whereConditions,
         relations: [
           "user",
-          "feedbacks",
-          "feedbacks.user",
-          "bookmarks",
-          "bookmarks.user",
         ],
         skip,
         take,
         order: {
           id: sortOrder === "DESC" ? "DESC" : "ASC",
+        },
+        select: {
+          id: true,
+          title: true,
+          type: true,
+          createdAt: true,
+          thumbnail: true,
+          archivedAt: true,
+          user: {
+            id: true,
+            name: true,
+            avatarUrl: true,
+            email: true,
+            createdAt: true
+          }
         },
       });
 
