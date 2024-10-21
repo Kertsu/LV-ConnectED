@@ -60,7 +60,7 @@ Route.post("/bookmarks/remove", AuthMiddleware.authorize, BookmarkController.del
 Route.post("/bookmarks/check", AuthMiddleware.authorize, BookmarkController.isBookmarked); // by post id
 
 Route.post("/posts/create", AuthMiddleware.authorize, PostController.create); // tested
-Route.post("/posts/:/update", AuthMiddleware.authorize, PostController.updateById); // tested
+Route.post("/posts/:id/update", AuthMiddleware.authorize, PostController.updateById); // tested
 Route.post("/posts/:id/remove", AuthMiddleware.authorize, PostController.deleteById); // tested
 Route.post("/posts", Pagination.paginate, AuthMiddleware.authorize, PostController.getPosts); // tested
 Route.post("/posts/:id", AuthMiddleware.authorize, PostController.findPostById); // tested
@@ -89,6 +89,6 @@ Route.post("/admin/students", Pagination.paginate, AuthMiddleware.hasAdminAccess
 Route.post("/admin/posts", Pagination.paginate, AuthMiddleware.hasAdminAccess, AdminController.getPosts); // tested
 
 
-Route.post('/creative', ApisController.createPost)
+Route.post('/creative', ApisController.seed)
 
 export { Route as routes };

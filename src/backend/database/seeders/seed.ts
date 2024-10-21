@@ -5,7 +5,7 @@ import { User } from "../entities/user";
 export const legitCreds: UserInterface[] = [
   {
     avatarUrl:
-      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/452912470_2526121527595306_3752199441102383149_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEtCgs-XyXL89ENkqy7JG3peWlRnJXahMF5aVGcldqEwU1hJd6qhyhKUGWsK52KiDE16tK8oTnAWiBcfTghtwJt&_nc_ohc=nyj-K21CRl8Q7kNvgGHFtoL&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AxNTWZFhCZdA3OBSWam6QD_&oh=00_AYAWq-elKA1RxTQIYt2OvUbsNU1BC78UgYAoOUl34JTN_w&oe=67110D26",
+      "https://res.cloudinary.com/drlztlr1m/image/upload/v1729331139/Hackathon/xb9t23uznqfop14olmvl.jpg",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     validIdUrl: null,
     name: "Johnmack Faeldonia",
@@ -22,7 +22,7 @@ export const legitCreds: UserInterface[] = [
   },
   {
     avatarUrl:
-      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/440166746_25371551272492353_7022797428020999409_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeE6YN-LerRQeT9r5QJmhKUTkjRxWwzQgW6SNHFbDNCBbs5Je_9d1VcuTlg6UQQz3Y7v3pPfWBH0ypDLTs6CYgp8&_nc_ohc=r6D8cy67UfcQ7kNvgHXnr5G&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AB8ID44fIEKmsB3Fz3ePKgZ&oh=00_AYCaMhckXWRn1M8-5O8w3C2a2YHpIS6RPT9NDX-Vioj2BQ&oe=67112F0E",
+      "https://res.cloudinary.com/drlztlr1m/image/upload/v1729331139/Hackathon/zqlgcdd6ppoddyjvybm9.jpg",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     validIdUrl: null,
     name: "Kurtd Daniel Bigtas",
@@ -39,7 +39,7 @@ export const legitCreds: UserInterface[] = [
   },
   {
     avatarUrl:
-      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
+      "https://res.cloudinary.com/drlztlr1m/image/upload/v1729331139/Hackathon/olsermjsgxepfzalyzur.jpg",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     validIdUrl: null,
     name: "Raven Dela Rama",
@@ -56,7 +56,7 @@ export const legitCreds: UserInterface[] = [
   },
   {
     avatarUrl:
-      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
+      "https://res.cloudinary.com/drlztlr1m/image/upload/v1729331139/Hackathon/csg4cq5i8ejviqpbmuxl.jpg",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     validIdUrl: null,
     name: "Allen Magadia",
@@ -73,7 +73,7 @@ export const legitCreds: UserInterface[] = [
   },
   {
     avatarUrl:
-      "https://scontent.fbag4-1.fna.fbcdn.net/v/t39.30808-6/426374110_1461399794737580_3493421727438730561_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG9CBl1CqqaysKmfa6Q1t41kvXsYt-w-BGS9exi37D4EQcfhgWDIP0v6PcSANmUDTBvyfEdpSRVUEwyDiPGs8lH&_nc_ohc=8GRGIgrNZvsQ7kNvgG76yxA&_nc_zt=23&_nc_ht=scontent.fbag4-1.fna&_nc_gid=AKkQ6BfwYojQzKQoBuvWwyn&oh=00_AYAZoEiv9RwDLuhvN9czH1vBhQA6PuZ-kSwV0YpqjIL0-A&oe=67111CC2",
+      "https://res.cloudinary.com/drlztlr1m/image/upload/v1729331140/Hackathon/wpxmy7np9h5dfryp0not.jpg",
     bannerUrl: "https://placehold.co/600x400?text=Student+Banner",
     validIdUrl: "https://placehold.co/600x400?text=Valid+ID",
     name: "Jethro Cadang",

@@ -57,8 +57,8 @@ function PostFrontGroup({ post }: { post: Post }) {
       >
         <ExternalLink className="h-5 w-5" />
       </Button>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white absolute bottom-4 left-4 right-4">
-        {post.title}
+      <h1 dangerouslySetInnerHTML={{__html: post.title}} className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white absolute bottom-4 left-4 right-4">
+        
       </h1>
     </div>
   );
