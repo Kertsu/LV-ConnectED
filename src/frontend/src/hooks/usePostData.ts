@@ -106,7 +106,7 @@ export const useGetAllArchivedPosts = (
 export const useGetAllPostsForAdmin = (
   page: number,
   take: number,
-  sortOrder: string = "ASC"
+  sortOrder: string = "DESC"
 ) => {
   return useQuery({
     queryKey: ["posts", page, take, sortOrder],

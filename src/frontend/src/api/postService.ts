@@ -17,7 +17,7 @@ export const getAllPosts = async (skip: number, take: number) => {
 export const getAllPostsForAdmin = async (
   page: number,
   take: number,
-  sortOrder: string = "ASC"
+  sortOrder: string = "DESC"
 ) => {
   const response = await axiosInstance.post(
     `/admin/posts`,

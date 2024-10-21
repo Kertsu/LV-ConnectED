@@ -100,7 +100,7 @@ export default function PostPage() {
             onClick={handleBack}
           >
             <MoveLeft className="h-4 w-4" />
-            {role === "admin" ? "Back to admin" : "Back to feed"}
+            {role === "admin" ? "Back" : "Back to feed"}
           </Button>
           <div className="flex gap-2">
             {role === "admin" ? (

@@ -73,9 +73,9 @@ export function AccountSettingsModal({ isOpen, onClose, onSave, onDeleteAccount 
         </div>
 
         <DialogFooter className="sm:justify-start">
-          <Button type="submit" onClick={handleSave} className="w-full sm:w-auto">
+          {/* <Button type="submit" onClick={handleSave} className="w-full sm:w-auto">
             Save Changes
-          </Button>
+          </Button> */}
         </DialogFooter>
       </DialogContent>
     </Dialog>
