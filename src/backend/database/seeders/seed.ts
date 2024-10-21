@@ -82,7 +82,7 @@ export const legitCreds: UserInterface[] = [
     email: "jethrocadang@student.laverdad.edu.ph",
     emailVerifiedAt: "2024-09-20T12:00:00Z",
     providerVerifiedAt: null,
-    role: "provider",
+    role: "admin",
     type: "other",
     createdAt: "2024-03-20T12:00:00Z",
     updatedAt: "2024-09-20T12:00:00Z",

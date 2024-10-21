@@ -1,8 +1,9 @@
+import { Bookmark } from "Database/entities/bookmark";
 import { Post } from "Database/entities/post";
 import { User } from "Database/entities/user";
 import { Request, Response } from "express";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
-import { IsNull, Not } from "typeorm";
+import { IsNull } from "typeorm";
 
 export default class PostController {
   static async getPosts(request: Request, response: Response) {
@@ -65,7 +66,15 @@ export default class PostController {
         return httpResponseError(response, null, "Post not found", 404);
       }
 
-      httpResponseSuccess(response, { post });
+      const bookmarked = await Bookmark.findOne({
+        where: {
+          post: {
+            id: post.id
+          }
+        }
+      });
+
+      httpResponseSuccess(response, { post, isBookmarked: !!bookmarked  });
     } catch (error) {
       httpResponseError(response, null, "Internal Server Error", 500);
     }

@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import { Configuration } from "../../../database/entities/configuration";
 import { Post } from "Database/entities/post";
 import { User } from "Database/entities/user";
+import { Request, Response } from "express";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { Feedback } from "Database/entities/feedback";
+import { Configuration } from "../../../database/entities/configuration";
 
 export default class ApisController {
   static async greet(request: Request, response: Response) {

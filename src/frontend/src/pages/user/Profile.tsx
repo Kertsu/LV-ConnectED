@@ -127,11 +127,11 @@ export default function ProfilePage() {
           <div className="w-full lg:w-2/3 space-y-8">
             <Card>
               <CardContent className="p-6">
-                <p className="text-muted-foreground mb-4">{auth?.data?.bio}</p>
+                <p className="text-muted-foreground mb-4">{userData?.bio}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center">
                     <Briefcase className="w-4 h-4 mr-2 text-muted-foreground" />
-                    <span>{user.information.role}</span>
+                    <span>{userData?.role}</span>
                   </div>
                   <div className="flex items-center">
                     <MapPin className="w-4 h-4 mr-2 text-muted-foreground" />
@@ -182,23 +182,22 @@ export default function ProfilePage() {
                   </Badge>
                 </CardHeader>
                 <CardContent>
-                    {userData?.archivedAt ? (
-                      <p>Your account is archived.</p>
-                    ) : userData?.providerVerifiedAt === null &&
-                      userData?.validIdUrl === null ? (
-                      <>
-                        <UploadValidId />
-                      </>
-                    ) : userData?.providerVerifiedAt === null ? (
-                      <p>
-                        Your valid ID has been uploaded. Verification is
-                        pending.
-                      </p>
-                    ) : (
-                      <p>
-                        Your account is verified. You can now post scholarships.
-                      </p>
-                    )}
+                  {userData?.archivedAt ? (
+                    <p>Your account is archived.</p>
+                  ) : userData?.providerVerifiedAt === null &&
+                    userData?.validIdUrl === null ? (
+                    <>
+                      <UploadValidId />
+                    </>
+                  ) : userData?.providerVerifiedAt === null ? (
+                    <p>
+                      Your valid ID has been uploaded. Verification is pending.
+                    </p>
+                  ) : (
+                    <p>
+                      Your account is verified. You can now post scholarships.
+                    </p>
+                  )}
                 </CardContent>
               </Card>
             )}
@@ -241,15 +240,17 @@ export default function ProfilePage() {
                     <Edit className="mr-2 h-4 w-4" />
                     Edit Profile
                   </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    size="sm"
-                    onClick={() => setIsAccountSettingsModalOpen(true)}
-                  >
-                    <Settings className="mr-2 h-4 w-4" />
-                    Account Settings
-                  </Button>
+                  {userData?.role !== "admin" && (
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start"
+                      size="sm"
+                      onClick={() => setIsAccountSettingsModalOpen(true)}
+                    >
+                      <Settings className="mr-2 h-4 w-4" />
+                      Account Settings
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -1,3 +1,5 @@
+import { APIResponse } from "@/types/api-response";
+import { Post } from "@/types/model";
 import axiosInstance from "./axiosConfig";
 
 //GET all post
@@ -36,7 +38,10 @@ export const getAllPostsForAdmin = async (
 
 //GET one post
 export const getPostById = async (id: string) => {
-  const response = await axiosInstance.post(`/posts/${id}`);
+  const response = await axiosInstance.post<APIResponse<{
+    post: Post,
+    isBookmarked: boolean;
+  }>>(`/posts/${id}`);
   return response.data;
 };
 

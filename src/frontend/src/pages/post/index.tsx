@@ -1,8 +1,4 @@
-import {
-  createBookmark,
-  deleteBookmark,
-  isBookmarked,
-} from "@/api/bookmarkService";
+import { createBookmark, deleteBookmark } from "@/api/bookmarkService";
 import { getPostById } from "@/api/postService";
 import Header from "@/components/header/user-header/Header";
 import PostSection from "@/components/post/post-components/PostSection";
@@ -38,8 +34,9 @@ export default function PostPage() {
       }
 
       try {
-        const data = await getPostById(postId);
-        setPost(data.post);
+        const result = await getPostById(postId);
+        setPost(result.post);
+        setBookmarked(result.isBookmarked!);
       } catch (error) {
         setError("Error fetching post information.");
       } finally {
@@ -49,16 +46,6 @@ export default function PostPage() {
 
     fetchPost();
   }, [postId]);
-
-  // useEffect(() => {
-  //   isBookmarked(String(postId))
-  //     .then((result) => {
-  //       setBookmarked(result?.bookmarked);
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error.message);
-  //     });
-  // }, []);
 
   const handleBack = () => {
     navigate(-1);
@@ -74,21 +61,23 @@ export default function PostPage() {
     // Implement bookmark functionality
     try {
       if (!bookmarked) {
-        await createBookmark(String(postId));
         setBookmarked(true);
         toast.success("Saved to Bookmark");
+        await createBookmark(String(postId));
       } else {
-        await deleteBookmark(String(postId));
         setBookmarked(false);
+        toast.success("Removed from Bookmark");
+        await deleteBookmark(String(postId));
       }
     } catch (error: any) {
+      // cancel optimistic update
+      if (!bookmarked) {
+        setBookmarked(false);
+      } else {
+        setBookmarked(true);
+      }
       toast.error(error.message);
     }
-  };
-
-  const handleLike = () => {
-    // Implement like functionality
-    toast.success("Post liked!");
   };
 
   if (loading) {
@@ -111,7 +100,7 @@ export default function PostPage() {
             onClick={handleBack}
           >
             <MoveLeft className="h-4 w-4" />
-            {role === "admin" ? "Back to admin" : "Back to feed"}
+            {role === "admin" ? "Back" : "Back to feed"}
           </Button>
           <div className="flex gap-2">
             {role === "admin" ? (

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { UserCircle, Settings } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
+import { UserCircle, Settings, LayoutDashboard } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { Skeleton } from "@/components/ui/skeleton";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 export default function LeftCardSide() {
   const navigate = useNavigate();
@@ -33,37 +33,64 @@ export default function LeftCardSide() {
     <div className="w-0 md:w-64 lg:w-64 bg-background p-6 flex flex-col space-y-6 border-r h-screen overflow-y-auto sticky top-16">
       <div className="flex flex-col items-center space-y-4">
         <Avatar className="w-20 h-20">
-          <AvatarImage src={data.avatarUrl || '/default-avatar.png'} alt={data.name || 'User Avatar'} />
-          <AvatarFallback>{data.name ? data.name.charAt(0) : 'U'}</AvatarFallback>
+          <AvatarImage
+            src={data.avatarUrl || "/default-avatar.png"}
+            alt={data.name || "User Avatar"}
+          />
+          <AvatarFallback>
+            {data.name ? data.name.charAt(0) : "U"}
+          </AvatarFallback>
         </Avatar>
         <div className="text-center">
-          <h2 className="text-lg font-semibold">{data.name || 'Unknown User'}</h2>
-          <p className="text-sm text-muted-foreground">{data.role || 'N/A'}</p>
+          <h2 className="text-lg font-semibold">
+            {data.name || "Unknown User"}
+          </h2>
+          <p className="text-sm text-muted-foreground">{data.role || "N/A"}</p>
         </div>
       </div>
-      <p className="text-sm text-center text-muted-foreground">{data.bio || 'No bio available'}</p>
+      <p className="text-sm text-center text-muted-foreground">
+        {data.bio || "No bio available"}
+      </p>
       <div className="space-y-2">
-        <Button 
-          variant="outline" 
-          className="w-full justify-start" 
-          size="sm" 
-          onClick={() => navigate('/profile')}
+        <Button
+          variant="outline"
+          className="w-full justify-start"
+          size="sm"
+          onClick={() => navigate("/profile")}
         >
           <UserCircle className="mr-2 h-4 w-4" />
           Profile
         </Button>
-        <Button 
-          variant="outline" 
-          className="w-full justify-start" 
-          size="sm"
-          onClick={() => navigate('/settings')}
-        >
-          <Settings className="mr-2 h-4 w-4" />
-          Account Settings
-        </Button>
+        {data.role !== "admin" && (
+          <Button
+            variant="outline"
+            className="w-full justify-start"
+            size="sm"
+            onClick={() => navigate("/profile")}
+          >
+            <Settings className="mr-2 h-4 w-4" />
+            Account Settings
+          </Button>
+        )}
+        {data.role === "admin" && (
+          <Button
+            variant="outline"
+            className="w-full justify-start"
+            size="sm"
+            onClick={() => navigate("/admin")}
+          >
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            Admin Dashboard
+          </Button>
+        )}
       </div>
       <div className="mt-auto text-xs text-muted-foreground space-y-1">
-        <p>Member since {data.createdAt ? format(new Date(data.createdAt), 'MMMM dd, yyyy') : 'N/A'}</p>
+        <p>
+          Member since{" "}
+          {data.createdAt
+            ? format(new Date(data.createdAt), "MMMM dd, yyyy")
+            : "N/A"}
+        </p>
         <p>ConnectEd 2024</p>
       </div>
     </div>

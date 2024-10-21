@@ -1,10 +1,9 @@
+import { Bookmark } from "Database/entities/bookmark";
+import { Post } from "Database/entities/post";
 import { Request, Response } from "express";
-import { EmailMessage, sendEmail } from "Helpers/mailer";
 import { httpResponseError, httpResponseSuccess } from "Helpers/response";
 import { IsNull, Not } from "typeorm";
 import { User } from "../../../database/entities/user";
-import { Post } from "Database/entities/post";
-import { Bookmark } from "Database/entities/bookmark";
 
 // GET all users
 export default class UserController {
