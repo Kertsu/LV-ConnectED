@@ -1,10 +1,11 @@
 import { APIResponse } from "@/types/api-response";
 import { Post } from "@/types/model";
+import { AxiosError } from "axios";
 import axiosInstance from "./axiosConfig";
 
 //GET all post
 export const getAllPosts = async (skip: number, take: number) => {
-  const response = await axiosInstance.post(`/posts`, {},{
+  const response = await axiosInstance.post(`/posts`, {}, {
     params: {
       page: skip / take,
       take,
@@ -115,3 +116,24 @@ export const getArchivedPosts = async (
   console.log("ln:79 postService.ts", response.data); // Add this line to log the response data
   return response.data;
 };
+
+
+export async function getPaginatedPosts(page: number = 1 ) {
+  try {
+    const response = await axiosInstance.post<APIResponse<{
+      posts: Post[];
+      count: number;
+    }>>('/posts', {}, {
+      params: {
+        page,
+        take: 6
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+}

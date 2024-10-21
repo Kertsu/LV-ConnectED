@@ -5,11 +5,12 @@ import {
   getAllPosts,
   getAllPostsForAdmin,
   getArchivedPosts,
+  getPaginatedPosts,
   getPostById,
   getPostsByCategoryType,
   unArchivePostById,
 } from "@/api/postService";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 
 // get ALL post
 export const useAllPost = (skip: number, take: number) => {
@@ -118,4 +119,35 @@ export const useGetAllPostsForAdmin = (
   });
 };
 
+export function usePaginatedPosts() {
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status
+  } = useInfiniteQuery({
+    queryKey: ['posts', 'paginate'],
+    initialPageParam: 1,
+    queryFn: async ({ pageParam }: QueryFunctionContext) => {
+      const result = await getPaginatedPosts(pageParam as number);
+      return {
+        data: result?.posts,
+        nextCursor: pageParam
+      };
+    },
+    getNextPageParam: (lastPage, pages) => lastPage?.nextCursor! as number + 1,
+  });
 
+  return {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status
+  };
+}

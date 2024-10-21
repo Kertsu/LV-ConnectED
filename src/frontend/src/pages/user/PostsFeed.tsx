@@ -1,18 +1,24 @@
-import { useState } from "react";
+import Header from "@/components/header/user-header/Header";
 import PostSummaryCard from "@/components/post/post-summary/PostSummaryCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PlusCircle, Search } from "lucide-react";
-import Header from "@/components/header/user-header/Header";
-import { SkeletonCard } from "@/components/ui/skeleton";
-import { useAllPost } from "@/hooks/usePostData"; // This hook needs to be created
-import { Post, User as UserModel } from "@/types/model";
 import { useAuth } from "@/hooks/use-auth"; // Assuming your auth hook provides user details
+import { useAllPost, usePaginatedPosts } from "@/hooks/usePostData"; // This hook needs to be created
+import { Dot, LoaderCircle, PlusCircle, Search } from "lucide-react";
+import { Fragment, useCallback, useRef, useState } from "react";
 
 export default function PostsFeed() {
-  const [activeTab, setActiveTab] = useState<"all" | "scholarship" | "internship">("all");
+  const [activeTab, setActiveTab] = useState<
+    "all" | "scholarship" | "internship"
+  >("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
   const [page, setPage] = useState(0);
@@ -20,22 +26,54 @@ export default function PostsFeed() {
 
   const { data: user } = useAuth();
 
-  const { data, isLoading,  } = useAllPost(page * take, take);
+  const { data, isLoading } = useAllPost(page * take, take);
 
   const filteredPosts = data?.posts
-  .filter((post: { type: string }) =>
-    activeTab === "all" || post.type === activeTab // If the active tab is "all", show all posts. Otherwise, filter by post type.
-  )
-  .filter((post: { title: string; content: string }) =>
-    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.content.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-  .sort((a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) =>
-    sortOrder === "latest"
-      ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  );
+    .filter(
+      (post: { type: string }) => activeTab === "all" || post.type === activeTab // If the active tab is "all", show all posts. Otherwise, filter by post type.
+    )
+    .filter(
+      (post: { title: string; content: string }) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.content.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort(
+      (
+        a: { createdAt: string | number | Date },
+        b: { createdAt: string | number | Date }
+      ) =>
+        sortOrder === "latest"
+          ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
 
+  const {
+    data: postData,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = usePaginatedPosts();
+
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const infiniteScrollRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (isFetching || isFetchingNextPage) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isFetching, isFetchingNextPage, hasNextPage, fetchNextPage]
+  );
 
   return (
     <>
@@ -50,7 +88,12 @@ export default function PostsFeed() {
           )}
         </div>
 
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "scholarship" | "internship")}>
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) =>
+            setActiveTab(value as "all" | "scholarship" | "internship")
+          }
+        >
           <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="scholarship">Scholarships</TabsTrigger>
@@ -69,7 +112,9 @@ export default function PostsFeed() {
             </div>
             <Select
               value={sortOrder}
-              onValueChange={(value) => setSortOrder(value as "latest" | "oldest")}
+              onValueChange={(value) =>
+                setSortOrder(value as "latest" | "oldest")
+              }
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by" />
@@ -83,7 +128,7 @@ export default function PostsFeed() {
 
           <TabsContent value="all" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {isLoading ? (
+              {/* {isLoading ? (
                 Array.from({ length: 6 }).map((_, index) => (
                   <SkeletonCard key={index} />
                 ))
@@ -95,7 +140,30 @@ export default function PostsFeed() {
                 ) : (
                   <div>No posts available.</div>
                 )
-              )}
+              )} */}
+              {postData?.pages.map((group, i) => (
+                <Fragment key={i}>
+                  {group?.data?.map((post, k) => (
+                    <div
+                      key={post.id}
+                      ref={
+                        group?.data?.length === k + 1 ? infiniteScrollRef : null
+                      }
+                    >
+                      <PostSummaryCard post={post} />
+                    </div>
+                  ))}
+                </Fragment>
+              ))}
+              {
+                <div className="w-full flex justify-center items-center py-5">
+                  {isFetchingNextPage && hasNextPage ? (
+                    <LoaderCircle className="h-10 w-10 animate-spin" />
+                  ) : (
+                    <Dot className="h-10 w-10" />
+                  )}
+                </div>
+              }
             </div>
           </TabsContent>
         </Tabs>
