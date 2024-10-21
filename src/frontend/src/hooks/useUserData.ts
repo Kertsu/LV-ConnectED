@@ -12,7 +12,8 @@ import {
   verifyProviderById,
   unArchiveUserById,
   getArchiveUsers,
-  uploadValidId
+  uploadValidId,
+  getAllProvidersPublic
 } from "@/api/userService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -59,6 +60,17 @@ export const useUserByProviders = (page: number, take: number, sortOrder:string 
   });
 };
 
+//providers for public
+export const useUserByProvidersPublic = (page: number, take: number, sortOrder:string = "ASC") => {
+  return useQuery({
+    queryKey: ["providers", page, take],
+    queryFn: () => getAllProvidersPublic(page, take, sortOrder),
+    staleTime: 10000,
+    refetchOnWindowFocus: false,
+    enabled: page >= 0 && take > 0,
+    select: (data) => ({ providers: data.providers, count: data.count }), // Return both data and count
+  });
+};
 export const useProviderById = (id: string) => {
   return useQuery({
     queryKey: ["provider", id],
