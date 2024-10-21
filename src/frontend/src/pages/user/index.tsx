@@ -10,7 +10,7 @@ import PostForm from "@/components/post/FormPost";
 import { Post, User as UserModel } from "@/types/model";
 import { useAuth } from "@/hooks/use-auth";
 import { useAllPost } from "@/hooks/usePostData";
-import { useUserByProviders } from "@/hooks/useUserData"; 
+import { useUserByProviders, useUserByProvidersPublic } from "@/hooks/useUserData"; 
 import { SkeletonCard } from "@/components/ui/skeleton";
 
 const User: React.FC = () => {
@@ -25,7 +25,7 @@ const User: React.FC = () => {
   const posts: Post[] = postsData?.posts || [];
 
   // Fetching providers using your new hook
-  const { data: providersData, isLoading: providersLoading } = useUserByProviders(skip, take); // Pass skip and take for pagination
+  const { data: providersData, isLoading: providersLoading } = useUserByProvidersPublic(skip, take); // Pass skip and take for pagination
   const filteredProviders: UserModel[] = providersData?.providers || []; // Adjust based on your API response
 
   // Scroll detection to show the arrow button when reaching the bottom
