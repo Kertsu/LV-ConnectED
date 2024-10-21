@@ -24,7 +24,7 @@ export default function PostsFeed() {
 
   const filteredPosts = data?.posts
   .filter((post: { type: string }) =>
-    activeTab === "all" || post.type === activeTab // If the active tab is "all", show all posts. Otherwise, filter by post type.
+    activeTab === "all" || post.type === activeTab 
   )
   .filter((post: { title: string; content: string }) =>
     post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -82,6 +82,40 @@ export default function PostsFeed() {
           </div>
 
           <TabsContent value="all" className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {isLoading ? (
+                Array.from({ length: 6 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))
+              ) : (
+                filteredPosts.length > 0 ? (
+                  filteredPosts.map((post: Post) => (
+                    <PostSummaryCard key={post.id} post={post} />
+                  ))
+                ) : (
+                  <div>No posts available.</div>
+                )
+              )}
+            </div>
+          </TabsContent>
+          <TabsContent value="scholarship" className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {isLoading ? (
+                Array.from({ length: 6 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))
+              ) : (
+                filteredPosts.length > 0 ? (
+                  filteredPosts.map((post: Post) => (
+                    <PostSummaryCard key={post.id} post={post} />
+                  ))
+                ) : (
+                  <div>No posts available.</div>
+                )
+              )}
+            </div>
+          </TabsContent>
+          <TabsContent value="internship" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {isLoading ? (
                 Array.from({ length: 6 }).map((_, index) => (
