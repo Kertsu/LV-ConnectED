@@ -1,12 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Header from '@/components/header/user-header/Header'
 
 export default function TermsAndConditions() {
   return (
-    <div >
-        <Header />
+    
     <div className="max-w-3xl mx-auto p-6 space-y-8">
       <Link to="/">
         <Button variant="ghost" size="sm">
@@ -82,7 +80,7 @@ export default function TermsAndConditions() {
           Last updated: {new Date().toLocaleDateString()}
         </p>
       </div>
-      </div>
+
     </div>
   )
 }

@@ -6,6 +6,7 @@ export const getAllPosts = async (skip: number, take: number) => {
     params: {
       page: skip / take,
       take,
+      sortOrder: "DESC"
     },
   });
   return response.data;
@@ -36,7 +37,7 @@ export const getAllPostsForAdmin = async (
 
 //GET one post
 export const getPostById = async (id: string) => {
-  const response = await axiosInstance.get(`/posts/${id}`);
+  const response = await axiosInstance.post(`/posts/${id}`);
   return response.data;
 };
 

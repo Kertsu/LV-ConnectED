@@ -151,7 +151,7 @@ const Home: React.FC = () => {
       >
         <BlurFade delay={0.25} inView>
           <NeonGradientCard>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold pb-10">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold pb-10 text-center  md:text-start ">
               Welcome to{" "}
               <span className="text-7xl font-bold dark:text--200 bg-gradient-to-r from-[#0038a9] via-[#ce1127] to-[#f5ce31] bg-clip-text text-transparent">
                 ConnectED
@@ -189,7 +189,7 @@ const Home: React.FC = () => {
           )}
         </div>
       </BlurFade>
-      <div className="flex flex-col gap-4 items-center container mx-auto">
+      <div id="whats"  className="flex flex-col gap-4 items-center container mx-auto">
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
             <WordFadeIn words="What's different about ConnectEd?" />
@@ -215,7 +215,7 @@ const Home: React.FC = () => {
 
       {/* test only for top providers */}
 
-      <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg pt-36 bg-background ">
+      <div id="partnership"  className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg pt-36 bg-background ">
         <Marquee pauseOnHover className="[--duration:20s]">
           {firstRow.map((review) => (
             <ReviewCard key={review.username} {...review} />
@@ -231,7 +231,7 @@ const Home: React.FC = () => {
       <CreatePost />
 
       {/* TEST FEEDBACKS */}
-      <div className="flex flex-col gap-4 items-center container mx-auto mt-6 pb-10">
+      <div  className="flex flex-col gap-4 items-center container mx-auto mt-6 pb-10  ">
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
             Still have questions?
@@ -240,6 +240,7 @@ const Home: React.FC = () => {
             type="single"
             collapsible
             className="w-full max-w-3xl mx-auto"
+            id="question"  
           >
             {[
               {
