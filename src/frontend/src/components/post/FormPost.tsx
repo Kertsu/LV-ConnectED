@@ -4,22 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PlusCircle } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { Link } from "react-router-dom";
 
 export default function PostForm() {
-  // Replace these with actual user data
-  const { data, isAuthenticated, login, logout } = useAuth();
+  const { data } = useAuth();
 
   const userName = data?.name || "";
   const userAvatarUrl = data?.avatarUrl || "";
 
-  console.log("User Data:", data);
-
   const getUserInitials = (name: string) => {
     const initials = name
-      .split(" ") // Split the name into an array of words
-      .map((word) => word[0]) // Get the first letter of each word
-      .join("") // Join the initials together
-      .toUpperCase(); // Ensure they are uppercase
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
     return initials;
   };
   const userInitials = getUserInitials(userName);
@@ -42,32 +40,45 @@ export default function PostForm() {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          <p className="text-muted-foreground">
-            Create and manage your posts to connect with students and share your
-            expertise.
-          </p>
-          <div className="bg-secondary p-6 rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-secondary-foreground">
-                Create a New Post
-              </h2>
-              <CreatePost>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-2"
-                >
-                  <PlusCircle className="w-4 h-4" />
-                  New Post
-                </Button>
-              </CreatePost>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Click the button above to create a new post. You can add a title,
-              select a scholarship type, upload a thumbnail, and write your
-              content.
-            </p>
-          </div>
+          {data?.providerVerifiedAt === null ? (
+            <>
+              <p className="text-muted-foreground">
+                <Link to={`/profile`} className="underline text-blue-500">
+                  Verify
+                </Link> your account. To start create posts and connect with students
+                and share your expertise.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-muted-foreground">
+                Create and manage your posts to connect with students and share
+                your expertise.
+              </p>
+              <div className="bg-secondary p-6 rounded-lg">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-secondary-foreground">
+                    Create a New Post
+                  </h2>
+                  <CreatePost>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      <PlusCircle className="w-4 h-4" />
+                      New Post
+                    </Button>
+                  </CreatePost>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Click the button above to create a new post. You can add a
+                  title, select a scholarship type, upload a thumbnail, and
+                  write your content.
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </CardContent>
     </Card>
