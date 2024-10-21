@@ -178,7 +178,7 @@ const PostSummaryCard: React.FC<{ post: Post }> = ({ post }) => {
   };
 
   return (
-    <Card className="bg-primary-foreground">
+    <Card className="">
       <CardHeader className="py-4">
         <div className="w-full flex justify-between items-center">
           <div className="flex gap-2 items-center">

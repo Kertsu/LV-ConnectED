@@ -147,7 +147,7 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            {user.information.role === "Provider" && (
+            {user.information.role === "Student" && (
                 <Card>
                   <CardHeader>
                     <CardTitle>Valid ID</CardTitle>

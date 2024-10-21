@@ -68,12 +68,14 @@ const User: React.FC = () => {
   
         <div className="container mx-auto px-4">
           {/* Use a min-height to avoid layout shifts */}
-          <div className="min-h-[100px]"> {/* Adjust min-height as needed */}
+          <div className="min-h-[40px]"> {/* Adjust min-height as needed */}
             {user?.role !== "student" && <PostForm />}
           </div>
         </div>
   
         <div className="container mx-auto px-4">
+        <h1 className="text-2xl font-bold">Posts</h1>
+
           <div className="grid grid-cols-1 gap-4 justify-center items-center py-4">
             {postsLoading ? (
               Array.from({ length: 6 }).map((_, index) => (
@@ -92,7 +94,7 @@ const User: React.FC = () => {
         </div>
   
         <div className="container mx-auto px-4 py-10">
-          <h1 className="text-2xl font-bold">Top Providers</h1>
+          <h1 className="text-2xl font-bold">Providers</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 justify-center items-center pt-10">
             {providersLoading
               ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
