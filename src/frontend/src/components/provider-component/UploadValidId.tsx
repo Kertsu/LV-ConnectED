@@ -1,3 +1,5 @@
+
+//Components
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,13 +18,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuth } from "@/hooks/use-auth";
 import { toast } from "@/hooks/use-toast";
-import { useUploadValidId } from "@/hooks/useUserData";
 import { cn } from "@/lib/utils";
+
+//Icons
 import { ImageUp, LoaderCircle, Plus } from "lucide-react";
+
+//Hooks
 import React from "react";
+import { useUploadValidId } from "@/hooks/useUserData";
 import { useState, useEffect, ChangeEvent, DragEvent } from "react";
+import { useAuth } from "@/hooks/use-auth";
 
 const UploadValidId = () => {
   const [error, setError] = useState<string | null>(null); // Add this line
@@ -136,12 +142,13 @@ const UploadValidId = () => {
         <Dialog
           open={open}
           onOpenChange={(isOpen) => {
-            if (!isOpen && imageURL) { // Only reset when the dialog is closing
-              setImageURL(null);       // Clear the image URL state
-              setImage(null);          // Clear the image state
-              URL.revokeObjectURL(imageURL); // Revoke the object URL to free up memory
+            // Reset Image
+            if (!isOpen && imageURL) { 
+              setImageURL(null);       
+              setImage(null);          
+              URL.revokeObjectURL(imageURL); 
             }
-            setOpen(isOpen); // Update the dialog open state based on the change
+            setOpen(isOpen); 
           }}
         >
           <DialogTrigger>

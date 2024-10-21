@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { ImageUp, Plus } from "lucide-react";
+import { ImageUp, LoaderCircle, Plus } from "lucide-react";
 
 import { ChangeEvent, DragEvent, ReactNode, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
@@ -27,6 +27,8 @@ import { Label } from "@/components/ui/label";
 import { formats, modules } from "./quill-options";
 import "./quill.css";
 import { useCreatePost } from "@/hooks/usePostData";
+import React from "react";
+import { toast } from "@/hooks/use-toast";
 
 interface CreatePostProps {
   children?: ReactNode; // Allow children to be passed as props
@@ -38,8 +40,9 @@ export default function CreatePost({ children }: CreatePostProps) {
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const { mutate: createPost } = useCreatePost();
-
+  const { mutate: createPost, isPending } = useCreatePost();
+  const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
+  const [open, setOpen] = React.useState(false);
   // Upload constants
   const cloud_name = "dst8xk1fa"; // change this to your cloud name
   const upload_preset = "pwdckr9c";
@@ -88,12 +91,12 @@ export default function CreatePost({ children }: CreatePostProps) {
     if (!thumbnail) return ""; // Return empty if no thumbnail is selected
 
     const formData = new FormData();
-    formData.append("file", thumbnail); 
+    formData.append("file", thumbnail);
     formData.append("upload_preset", upload_preset);
 
     try {
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
       if (!response.ok) {
@@ -108,28 +111,78 @@ export default function CreatePost({ children }: CreatePostProps) {
     }
   }
 
+  const resetErrors = () => {
+    setErrors({});
+  };
+
   async function createPostHandler() {
-    if (title && type && content) {
-      const thumbnailURL = await uploadThumbnail(); // Upload thumbnail and get URL
-      createPost({
+    // Validate form fields before proceeding
+    const newErrors: { [key: string]: string | null } = {};
+    if (!title) {
+      console.log("Title is required");
+      newErrors.title = "Title is required";
+    }
+    if (!type) {
+      console.log("Platform type is required");
+      newErrors.type = "Post type is required";
+    }
+    if (!content) {
+      newErrors.content = "Content is required";
+    }
+    if (!thumbnail) {
+      newErrors.thumbnail = "Thumbnail is required";
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    const thumbnailURL = await uploadThumbnail(); // Upload thumbnail and get URL
+    createPost(
+      {
         title,
-        thumbnail: thumbnailURL || "", // Use the uploaded URL
+        thumbnail: thumbnailURL,
         type,
         content,
-      });
-    } else {
-      console.log("Please fill all required fields.");
-    }
+      },
+      {
+        onSuccess: () => {
+          setOpen(false);
+          toast({
+            title: "Success",
+            description: "Post created",
+            variant: "default",
+          });
+          resetErrors();
+          setTitle("");
+          setType("");
+          setContent("");
+          setThumbnail(null);
+          setThumbnailURL(null);
+        },
+        onError: () => {
+          setOpen(false);
+          toast({
+            title: "Error!",
+            description: "Failed to create post!!",
+            variant: "destructive",
+          });
+        },
+      }
+    );
   }
 
   return (
     <Dialog
-      onOpenChange={() => {
-        if (thumbnailURL) {
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen && thumbnailURL) {
+          // Reset thumbnail and URL
           setThumbnailURL(null);
           setThumbnail(null);
           URL.revokeObjectURL(thumbnailURL);
         }
+        resetErrors();
+        setOpen(isOpen);
       }}
     >
       <DialogTrigger>
@@ -173,6 +226,9 @@ export default function CreatePost({ children }: CreatePostProps) {
                 <div className="flex flex-col justify-center items-center gap-4 text-slate-500">
                   <ImageUp className="h-16 w-16" />
                   Upload Thumbnail
+                  {errors.thumbnail && (
+                    <p className="text-red-500">Image is required!</p>
+                  )}
                 </div>
               )}
             </Label>
@@ -183,11 +239,18 @@ export default function CreatePost({ children }: CreatePostProps) {
               placeholder="Title"
               onChange={handleTitle}
               value={title}
-              className="w-full"
+              className={`w-full border ${
+                errors && errors.title ? "border-red-500" : ""
+              }`}
+              onFocus={resetErrors}
             />
-
             <Select onValueChange={handlePlatformType}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger
+                className={`w-full border ${
+                  errors && errors.type ? "border-red-500" : ""
+                }`}
+                onFocus={resetErrors}
+              >
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
@@ -218,7 +281,10 @@ export default function CreatePost({ children }: CreatePostProps) {
               modules={modules}
               formats={formats}
               placeholder=""
-              className="overflow-y-auto custom-ql"
+              className={`overflow-y-auto custom-ql border rounded-lg ${
+                errors && errors.title ? "border-red-500" : ""
+              }`}
+              onFocus={resetErrors}
             />
           </div>
 
@@ -228,8 +294,18 @@ export default function CreatePost({ children }: CreatePostProps) {
               size={"lg"}
               onClick={createPostHandler}
               className="flex gap-1 items-center"
+              disabled={isPending}
             >
-              <Plus /> Create new post
+              {isPending ? (
+                <>
+                  <LoaderCircle className="animate-spin h-5 w-5 text-gray-600 " />{" "}
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Plus /> Create Post
+                </>
+              )}{" "}
             </Button>
           </div>
         </div>
