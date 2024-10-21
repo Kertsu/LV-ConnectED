@@ -16,7 +16,7 @@ export default function PostsFeed() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
   const [page, setPage] = useState(0);
-  const take = 20;
+  const take = 30;
 
   const { data: user } = useAuth();
 

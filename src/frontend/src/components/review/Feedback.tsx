@@ -32,7 +32,7 @@ const Feedback: React.FC<FeedbackProps> = (FeedbackProps) => {
                   alt={user.name ?? user.organizationName}
                 />
                 <AvatarFallback>
-                  {user.name ?? user.organizationName}
+                  {user.name.charAt(0) ?? user.organizationName}
                 </AvatarFallback>
               </Avatar>
 

@@ -185,12 +185,14 @@ const Home: React.FC = () => {
           {theme.theme == "dark" ? (
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent" />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent " />
           )}
         </div>
       </BlurFade>
       <div className="flex flex-col gap-4 items-center container mx-auto">
-        <div className="container px-4 md:px-6">
+        
+        <div className="container relative px-4 md:px-6">
+        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#d1d5db,transparent_1px),linear-gradient(to_bottom,#d1d5db,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_60%_0%,#000_80%,transparent_110%)]"></div>
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
             <WordFadeIn words="What's different about ConnectEd?" />
           </h2>
@@ -199,6 +201,7 @@ const Home: React.FC = () => {
               return (
                 <BlurFade delay={s.delay} inView>
                   <Card className="h-full">
+                  
                     <CardHeader>
                       <CardTitle>{s.title}</CardTitle>
                     </CardHeader>
@@ -216,6 +219,7 @@ const Home: React.FC = () => {
       {/* test only for top providers */}
 
       <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg pt-36 bg-background ">
+      
         <Marquee pauseOnHover className="[--duration:20s]">
           {firstRow.map((review) => (
             <ReviewCard key={review.username} {...review} />
@@ -232,7 +236,9 @@ const Home: React.FC = () => {
 
       {/* TEST FEEDBACKS */}
       <div className="flex flex-col gap-4 items-center container mx-auto mt-6 pb-10">
+        
         <div className="container px-4 md:px-6">
+          
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center py-20">
             Still have questions?
           </h2>
